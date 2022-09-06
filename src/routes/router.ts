@@ -21,7 +21,7 @@ export default class Router {
     method: HTTPMethod,
     func: (req: Request, res: Response) => void
   ) {
-    switch (method.toUpperCase()) {
+    switch (method) {
       case HTTPMethod.GET:
         {
           this.app.get(path, func);
