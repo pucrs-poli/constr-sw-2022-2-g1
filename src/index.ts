@@ -1,16 +1,12 @@
 import express, { Express } from "express";
-import Router, { HTTPMethod } from "./routes/router";
-import { helloWorld } from "./controllers/controller";
+import Router from "./routes/router";
 
-const APP: Express = express();
-const PORT: number = 3000;
+const app: Express = express();
+const port: number = 3000;
 
-const router: Router = new Router(APP);
-/*
-  Routes.
-*/
-router.addRoute("/", HTTPMethod.GET, helloWorld);
+const router: Router = new Router(app);
+router.setupRoutes();
 
-APP.listen(PORT, () => {
-  console.log(`Backend running on port ${PORT}.`);
+app.listen(port, () => {
+  console.log(`Backend running on port ${port}.`);
 });

@@ -1,6 +1,7 @@
 import { Express, Request, Response } from "express";
+import { helloWorld } from "../controllers/controller";
 
-export enum HTTPMethod {
+enum HTTPMethod {
   GET = "GET",
   POST = "POST",
   PUT = "PUT",
@@ -15,7 +16,7 @@ export default class Router {
     this.app = app;
   }
 
-  public addRoute(
+  private createRoute(
     path: string,
     method: HTTPMethod,
     func: (req: Request, res: Response) => void
@@ -47,5 +48,12 @@ export default class Router {
         }
         break;
     }
+  }
+
+  /*
+    Routes.
+  */
+  public setupRoutes(): void {
+    this.createRoute("/", HTTPMethod.GET, helloWorld);
   }
 }
