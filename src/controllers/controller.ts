@@ -1,45 +1,45 @@
 import { Request, Response } from "express";
+import { LoginRequestBody, User } from "../models/models";
 import * as service from "../services/keycloak/service";
 
-export function login(_req: Request, res: Response): void {
-  // Call the service layer here.
-  res.json({
-    status: "OK! This is the login route.",
-  });
+export function login(req: Request, res: Response): void {
+  const body = req.body as LoginRequestBody;
+  const result = service.login(body);
+  res.json(result);
 }
+
 export function getAllUsers(_req: Request, res: Response): void {
-  // Call the service layer here.
-  res.json({
-    status: "OK! This is the get all users route.",
-  });
+  const result = service.getAllUsers();
+  res.json(result);
 }
+
 export function getUserById(req: Request, res: Response): void {
-  // Call the service layer here.
-  res.json({
-    status: `OK! This is the get user by id route. ID: ${req.params.id}`,
-  });
+  const id = req.params.id;
+  const result = service.getUserById(id);
+  res.json(result);
 }
-export function createUser(_req: Request, res: Response): void {
-  // Call the service layer here.
-  res.json({
-    status: "OK! This is the create user route.",
-  });
+
+export function createUser(req: Request, res: Response): void {
+  const body = req.body as User;
+  const result = service.createUser(body);
+  res.json(result);
 }
+
 export function updateUser(req: Request, res: Response): void {
-  // Call the service layer here.
-  res.json({
-    status: `OK! This is the update user route. ID: ${req.params.id}`,
-  });
+  const body = req.body as User;
+  const result = service.updateUser(body);
+  res.json(result);
 }
+
 export function updateUserPassword(req: Request, res: Response): void {
-  // Call the service layer here.
-  res.json({
-    status: `OK! This is the update user password route. ID: ${req.params.id}`,
-  });
+  const id = req.params.id;
+  const password = req.body.password as string;
+  const result = service.updateUserPassword(id, password);
+  res.json(result);
 }
+
 export function deleteUser(req: Request, res: Response): void {
-  // Call the service layer here.
-  res.json({
-    status: `OK! This is the delete user route. ID: ${req.params.id}`,
-  });
+  const id = req.params.id;
+  const result = service.deleteUser(id);
+  res.json(result);
 }
