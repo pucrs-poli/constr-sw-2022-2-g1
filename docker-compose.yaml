@@ -20,7 +20,6 @@ services:
   backend:
     container_name: backend
     build: .
-    image: constr-soft-2022-2/backend-api:v1
     ports:
       - 3000:3000
     networks:

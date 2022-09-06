@@ -1,12 +1,16 @@
-import express from "express";
+import express, { Express } from "express";
+import Router, { HTTPMethod } from "./routes/router";
+import { helloWorld } from "./controllers/controller";
 
-const app = express();
-const port = 3000;
+const APP: Express = express();
+const PORT: number = 3000;
 
-app.get("/", (_req, res) => {
-  res.send("Hello! The API is up!");
-});
+const router: Router = new Router(APP);
+/*
+  Routes.
+*/
+router.addRoute("/", HTTPMethod.GET, helloWorld);
 
-app.listen(port, () => {
-  console.log(`Backend running on port ${port}.`);
+APP.listen(PORT, () => {
+  console.log(`Backend running on port ${PORT}.`);
 });
