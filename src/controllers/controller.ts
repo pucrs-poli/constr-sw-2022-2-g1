@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import * as service from "../services/keycloak/service";
 
 export function login(_req: Request, res: Response): void {
   // Call the service layer here.
