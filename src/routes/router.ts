@@ -1,5 +1,5 @@
 import { Express, Request, Response } from "express";
-import { helloWorld } from "../controllers/controller";
+import * as controller from "../controllers/controller";
 
 enum HTTPMethod {
   GET = "GET",
@@ -54,6 +54,16 @@ export default class Router {
     Routes.
   */
   public setupRoutes(): void {
-    this.createRoute("/", HTTPMethod.GET, helloWorld);
+    this.createRoute("/login", HTTPMethod.POST, controller.login);
+    this.createRoute("/users", HTTPMethod.GET, controller.getAllUsers);
+    this.createRoute("/users/:id", HTTPMethod.GET, controller.getUserById);
+    this.createRoute("/users", HTTPMethod.POST, controller.createUser);
+    this.createRoute("/users/:id", HTTPMethod.PUT, controller.updateUser);
+    this.createRoute(
+      "/users/:id",
+      HTTPMethod.PATCH,
+      controller.updateUserPassword
+    );
+    this.createRoute("/users/:id", HTTPMethod.DELETE, controller.deleteUser);
   }
 }
