@@ -1,13 +1,20 @@
 import { Request, Response } from "express";
 import { LoginRequestBody, User } from "../models/models";
-import * as service from "../services/keycloak/service";
+import * as service from "../services/service";
 
-export function login(req: Request, res: Response): void {
+export async function login(req: Request, res: Response): Promise<void> {
   const body = req.body as LoginRequestBody;
-  const result = service.login(body);
-  res.json(result);
+  const loginInfo = await service.login(body);
+  if (loginInfo) {
+    res.status(200).json(loginInfo);
+  } else {
+    res.status(401).send();
+  }
 }
 
+/*
+  Functions below are not implemented yet.
+*/
 export function getAllUsers(_req: Request, res: Response): void {
   const result = service.getAllUsers();
   res.json(result);
