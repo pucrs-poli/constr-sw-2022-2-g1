@@ -19,32 +19,32 @@ export default class Router {
   private createRoute(
     path: string,
     method: HTTPMethod,
-    func: (req: Request, res: Response) => void
+    controllerFunction: (arg0: Request, arg1: Response) => void
   ) {
     switch (method) {
       case HTTPMethod.GET:
         {
-          this.app.get(path, func);
+          this.app.get(path, controllerFunction);
         }
         break;
       case HTTPMethod.POST:
         {
-          this.app.post(path, func);
+          this.app.post(path, controllerFunction);
         }
         break;
       case HTTPMethod.PUT:
         {
-          this.app.put(path, func);
+          this.app.put(path, controllerFunction);
         }
         break;
       case HTTPMethod.PATCH:
         {
-          this.app.patch(path, func);
+          this.app.patch(path, controllerFunction);
         }
         break;
       case HTTPMethod.DELETE:
         {
-          this.app.delete(path, func);
+          this.app.delete(path, controllerFunction);
         }
         break;
     }
