@@ -1,6 +1,3 @@
-/*
-  API.
-*/
 export interface LoginRequestBody {
   client_id: string;
   username: string;
@@ -15,14 +12,20 @@ export interface LoginResponseBody {
   refresh_expires_in: number;
 }
 export interface User {
-  id?: string;
-  username: string;
-  // ... What does an user have?
+  sub?: string;
+  email_verified: boolean;
+  name: string;
+  preferred_username: string;
+  given_name: string;
+  family_name: string;
+  email: string;
 }
-
-/*
-  Keycloak.
-*/
+export interface CreateUserRequestBody {
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
+}
 export interface TokenRequestBody {
   client_id: string;
   client_secret: string;
@@ -39,13 +42,4 @@ export interface TokenResponseBody {
   "not-before-policy": number;
   session_state: string;
   scope: string;
-}
-export interface KeycloakUserResponseBody {
-  sub: string;
-  email_verified: boolean;
-  name: string;
-  preferred_username: string;
-  given_name: string;
-  family_name: string;
-  email: string;
 }

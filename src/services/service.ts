@@ -1,5 +1,6 @@
 import { CLIENT_SECRET } from "../config";
 import {
+  CreateUserRequestBody,
   LoginRequestBody,
   LoginResponseBody,
   TokenRequestBody,
@@ -29,30 +30,53 @@ export async function login(
   }
   return null;
 }
+
+// NOT IMPLEMENTED YET.
 export function getAllUsers(): User[] {
   return [];
 }
+
+// NOT IMPLEMENTED YET.
 export function getUserById(id: string): User {
   return {
-    id: "",
-    username: "",
+    email_verified: false,
+    name: "",
+    preferred_username: "",
+    given_name: "",
+    family_name: "",
+    email: "",
   };
 }
-export function createUser(user: User): User {
-  return {
-    id: "",
-    username: "",
-  };
+
+export async function createUser(
+  user: CreateUserRequestBody,
+  accessToken: string
+): Promise<User | null> {
+  const newUser = await keycloak.createUser(user, accessToken);
+  if (newUser) {
+    return newUser;
+  }
+  return null;
 }
+
+// NOT IMPLEMENTED YET.
 export function updateUser(user: User): User {
   return {
-    id: "",
-    username: "",
+    email_verified: false,
+    name: "",
+    preferred_username: "",
+    given_name: "",
+    family_name: "",
+    email: "",
   };
 }
+
+// NOT IMPLEMENTED YET.
 export function updateUserPassword(id: string, password: string): boolean {
   return true;
 }
+
+// NOT IMPLEMENTED YET.
 export function deleteUser(id: string): boolean {
   return true;
 }
