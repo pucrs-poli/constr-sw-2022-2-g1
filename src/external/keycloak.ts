@@ -1,8 +1,8 @@
 import axios from "axios";
 import qs from "qs";
+import { REALM_NAME } from "../config";
 import { TokenRequestBody, TokenResponseBody } from "../models/models";
 
-const REALM_NAME = "constr-sw-2022";
 const KEYCLOAK_OPTIONS = {
   headers: {
     "Content-Type": "application/x-www-form-urlencoded",
