@@ -40,3 +40,12 @@ export interface TokenResponseBody {
   session_state: string;
   scope: string;
 }
+export interface KeycloakUserResponseBody {
+  sub: string;
+  email_verified: boolean;
+  name: string;
+  preferred_username: string;
+  given_name: string;
+  family_name: string;
+  email: string;
+}
