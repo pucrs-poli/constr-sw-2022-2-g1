@@ -1,6 +1,6 @@
 import axios from "axios";
 import qs from "qs";
-import { REALM_NAME } from "../config";
+import { KEYCLOAK_PORT, REALM_NAME } from "../config";
 import {
   TokenRequestBody,
   TokenResponseBody,
@@ -8,7 +8,7 @@ import {
   User,
 } from "../models/models";
 
-const TOKEN_ENDPOINT = `http://localhost:8080/auth/realms/${REALM_NAME}/protocol/openid-connect/token`;
+const TOKEN_ENDPOINT = `http://localhost:${KEYCLOAK_PORT}/auth/realms/${REALM_NAME}/protocol/openid-connect/token`;
 export async function getToken(
   body: TokenRequestBody
 ): Promise<TokenResponseBody | null> {
@@ -25,7 +25,7 @@ export async function getToken(
   }
 }
 
-const USER_INFO_ENDPOINT = `http://localhost:8080/auth/realms/${REALM_NAME}/protocol/openid-connect/userinfo`;
+const USER_INFO_ENDPOINT = `http://localhost:${KEYCLOAK_PORT}/auth/realms/${REALM_NAME}/protocol/openid-connect/userinfo`;
 export async function getUserInfo(accessToken: string): Promise<User | null> {
   try {
     const response = await axios.get(USER_INFO_ENDPOINT, {
@@ -40,7 +40,7 @@ export async function getUserInfo(accessToken: string): Promise<User | null> {
   }
 }
 
-const CREATE_USER_ENDPOINT = `http://localhost:8080/auth/admin/realms/${REALM_NAME}/users`;
+const CREATE_USER_ENDPOINT = `http://localhost:${KEYCLOAK_PORT}/auth/admin/realms/${REALM_NAME}/users`;
 export async function createUser(
   body: CreateUserRequestBody,
   accessToken: string

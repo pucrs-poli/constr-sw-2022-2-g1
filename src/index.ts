@@ -1,12 +1,12 @@
 import express, { Express } from "express";
 import Router from "./routes/router";
 
-const app: Express = express();
+const app = express();
 app.use(express.json());
 
-const port: number = 3000;
+const port = 3000;
 
-const router: Router = new Router(app);
+const router = new Router(app);
 router.setupRoutes();
 
 app.listen(port, () => {
