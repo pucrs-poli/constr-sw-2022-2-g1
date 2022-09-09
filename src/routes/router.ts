@@ -1,5 +1,6 @@
 import { Express, Request, Response } from "express";
 import * as controller from "../controllers/controller";
+import { hasAccessToken } from "../middlewares/middlewares";
 
 enum HTTPMethod {
   GET = "GET",
@@ -7,6 +8,10 @@ enum HTTPMethod {
   PUT = "PUT",
   PATCH = "PATCH",
   DELETE = "DELETE",
+}
+enum Authorization {
+  ACCESS_TOKEN = "ACCESS_TOKEN",
+  NO_ACCESS_TOKEN = "NO_ACCESS_TOKEN",
 }
 
 export default class Router {
@@ -19,32 +24,45 @@ export default class Router {
   private createRoute(
     path: string,
     method: HTTPMethod,
-    controllerFunction: (arg0: Request, arg1: Response) => void
+    controllerFunction: (arg0: Request, arg1: Response) => void,
+    authorization: Authorization
   ) {
     switch (method) {
       case HTTPMethod.GET:
         {
-          this.app.get(path, controllerFunction);
+          if (authorization === Authorization.ACCESS_TOKEN) {
+            this.app.get(path, controllerFunction);
+          } else {
+            this.app.get(path, hasAccessToken, controllerFunction);
+          }
         }
         break;
       case HTTPMethod.POST:
-        {
+        if (authorization === Authorization.ACCESS_TOKEN) {
           this.app.post(path, controllerFunction);
+        } else {
+          this.app.post(path, hasAccessToken, controllerFunction);
         }
         break;
       case HTTPMethod.PUT:
-        {
+        if (authorization === Authorization.ACCESS_TOKEN) {
           this.app.put(path, controllerFunction);
+        } else {
+          this.app.put(path, hasAccessToken, controllerFunction);
         }
         break;
       case HTTPMethod.PATCH:
-        {
+        if (authorization === Authorization.ACCESS_TOKEN) {
           this.app.patch(path, controllerFunction);
+        } else {
+          this.app.patch(path, hasAccessToken, controllerFunction);
         }
         break;
       case HTTPMethod.DELETE:
-        {
+        if (authorization === Authorization.ACCESS_TOKEN) {
           this.app.delete(path, controllerFunction);
+        } else {
+          this.app.delete(path, hasAccessToken, controllerFunction);
         }
         break;
     }
@@ -54,16 +72,47 @@ export default class Router {
     Routes.
   */
   public setupRoutes(): void {
-    this.createRoute("/login", HTTPMethod.POST, controller.login);
-    this.createRoute("/users", HTTPMethod.GET, controller.getAllUsers);
-    this.createRoute("/users/:id", HTTPMethod.GET, controller.getUserById);
-    this.createRoute("/users", HTTPMethod.POST, controller.createUser);
-    this.createRoute("/users/:id", HTTPMethod.PUT, controller.updateUser);
+    this.createRoute(
+      "/login",
+      HTTPMethod.POST,
+      controller.login,
+      Authorization.NO_ACCESS_TOKEN
+    );
+    this.createRoute(
+      "/users",
+      HTTPMethod.GET,
+      controller.getAllUsers,
+      Authorization.ACCESS_TOKEN
+    );
+    this.createRoute(
+      "/users/:id",
+      HTTPMethod.GET,
+      controller.getUserById,
+      Authorization.ACCESS_TOKEN
+    );
+    this.createRoute(
+      "/users",
+      HTTPMethod.POST,
+      controller.createUser,
+      Authorization.ACCESS_TOKEN
+    );
+    this.createRoute(
+      "/users/:id",
+      HTTPMethod.PUT,
+      controller.updateUser,
+      Authorization.ACCESS_TOKEN
+    );
     this.createRoute(
       "/users/:id",
       HTTPMethod.PATCH,
-      controller.updateUserPassword
+      controller.updateUserPassword,
+      Authorization.ACCESS_TOKEN
     );
-    this.createRoute("/users/:id", HTTPMethod.DELETE, controller.deleteUser);
+    this.createRoute(
+      "/users/:id",
+      HTTPMethod.DELETE,
+      controller.deleteUser,
+      Authorization.ACCESS_TOKEN
+    );
   }
 }
