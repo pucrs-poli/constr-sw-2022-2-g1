@@ -9,7 +9,6 @@ export function checkAccessToken(
     return res.status(401).send("Unauthorized. No access token provided.");
   } else if (req.headers.authorization.split(" ")[0] !== "Bearer") {
     return res.status(401).send("Unauthorized. Invalid access token.");
-  } else {
-    next();
   }
+  next();
 }

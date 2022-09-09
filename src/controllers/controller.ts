@@ -31,11 +31,7 @@ export function getUserById(req: Request, res: Response): void {
 
 export function createUser(req: Request, res: Response): void {
   const body = req.body as CreateUserRequestBody;
-  const accessToken = req.headers.authorization;
-  if (!accessToken) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
+  const accessToken = req.headers.authorization as string;
   const newUser = service.createUser(body, accessToken);
   if (newUser) {
     res.status(201).json(newUser);
