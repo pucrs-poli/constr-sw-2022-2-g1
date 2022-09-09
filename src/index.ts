@@ -1,14 +1,13 @@
-import express, { Express } from "express";
+import express from "express";
+import { API_PORT } from "./config";
 import Router from "./routes/router";
 
 const app = express();
 app.use(express.json());
 
-const port = 3000;
-
 const router = new Router(app);
 router.setupRoutes();
 
-app.listen(port, () => {
-  console.log(`Backend running on port ${port}.`);
+app.listen(API_PORT, () => {
+  console.log(`Backend running on port ${API_PORT}.`);
 });
