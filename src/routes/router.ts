@@ -1,6 +1,6 @@
 import { Express, Request, Response } from "express";
 import * as controller from "../controllers/controller";
-import { hasAccessToken } from "../middlewares/middlewares";
+import { checkAccessToken } from "../middlewares/middlewares";
 
 enum HTTPMethod {
   GET = "GET",
@@ -30,39 +30,39 @@ export default class Router {
     switch (method) {
       case HTTPMethod.GET:
         {
-          if (authorization === Authorization.ACCESS_TOKEN) {
+          if (authorization === Authorization.NO_ACCESS_TOKEN) {
             this.app.get(path, controllerFunction);
           } else {
-            this.app.get(path, hasAccessToken, controllerFunction);
+            this.app.get(path, checkAccessToken, controllerFunction);
           }
         }
         break;
       case HTTPMethod.POST:
-        if (authorization === Authorization.ACCESS_TOKEN) {
+        if (authorization === Authorization.NO_ACCESS_TOKEN) {
           this.app.post(path, controllerFunction);
         } else {
-          this.app.post(path, hasAccessToken, controllerFunction);
+          this.app.post(path, checkAccessToken, controllerFunction);
         }
         break;
       case HTTPMethod.PUT:
-        if (authorization === Authorization.ACCESS_TOKEN) {
+        if (authorization === Authorization.NO_ACCESS_TOKEN) {
           this.app.put(path, controllerFunction);
         } else {
-          this.app.put(path, hasAccessToken, controllerFunction);
+          this.app.put(path, checkAccessToken, controllerFunction);
         }
         break;
       case HTTPMethod.PATCH:
-        if (authorization === Authorization.ACCESS_TOKEN) {
+        if (authorization === Authorization.NO_ACCESS_TOKEN) {
           this.app.patch(path, controllerFunction);
         } else {
-          this.app.patch(path, hasAccessToken, controllerFunction);
+          this.app.patch(path, checkAccessToken, controllerFunction);
         }
         break;
       case HTTPMethod.DELETE:
-        if (authorization === Authorization.ACCESS_TOKEN) {
+        if (authorization === Authorization.NO_ACCESS_TOKEN) {
           this.app.delete(path, controllerFunction);
         } else {
-          this.app.delete(path, hasAccessToken, controllerFunction);
+          this.app.delete(path, checkAccessToken, controllerFunction);
         }
         break;
     }
