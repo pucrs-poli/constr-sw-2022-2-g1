@@ -14,6 +14,10 @@
     {
       "name": "Login",
       "description": "Login as an user."
+    },
+    {
+      "name": "Users",
+      "description": "Fetch/Create users."
     }
   ],
   "paths": {
@@ -32,10 +36,63 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Ok.",
             "schema": {
               "$ref": "#/components/schemas/LoginResponseBody"
             }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": ["Users"],
+        "description": "Endpoint to fetch all users.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "description": "An admin access token.",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/AccessToken"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok."
+          },
+          "401": {
+            "description": "Unauthorized (No Access Token)."
+          }
+        }
+      },
+      "post": {
+        "tags": ["Users"],
+        "description": "Endpoint to create an user.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "description": "An admin access token.",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/AccessToken"
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/components/schemas/CreateUserRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created."
+          },
+          "401": {
+            "description": "Unauthorized (No Access Token)."
           }
         }
       }
@@ -43,6 +100,10 @@
   },
   "components": {
     "schemas": {
+      "AccessToken": {
+        "type": "string",
+        "example": "Bearer <YOUR_TOKEN>"
+      },
       "LoginRequestBody": {
         "type": "object",
         "properties": {
@@ -68,19 +129,45 @@
         "type": "object",
         "properties": {
           "token_type": {
-            "type": "string"
+            "type": "string",
+            "example": "Bearer"
           },
           "access_token": {
-            "type": "string"
+            "type": "string",
+            "example": "eyJhbGciOiJSUzI..."
           },
           "expires_in": {
-            "type": "number"
+            "type": "number",
+            "example": 300
           },
           "refresh_token": {
-            "type": "string"
+            "type": "string",
+            "example": "ey5TbGciOiJSUzK..."
           },
           "refresh_expires_in": {
-            "type": "number"
+            "type": "number",
+            "example": 1800
+          }
+        }
+      },
+      "CreateUserRequestBody": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "example": "George"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Tyson"
+          },
+          "email": {
+            "type": "number",
+            "example": "george.tyson@gmail.com"
+          },
+          "username": {
+            "type": "string",
+            "example": "TysonGeorge125"
           }
         }
       }
