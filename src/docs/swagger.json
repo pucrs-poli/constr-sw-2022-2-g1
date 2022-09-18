@@ -1,0 +1,89 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Keycloak REST API",
+    "description": "REST API that makes use of Keycloak."
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "tags": [
+    {
+      "name": "Login",
+      "description": "Login as an user."
+    }
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": ["Login"],
+        "description": "Endpoint to login as an user.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/components/schemas/LoginRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/LoginResponseBody"
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LoginRequestBody": {
+        "type": "object",
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "example": "grupo1"
+          },
+          "username": {
+            "type": "string",
+            "example": "admin"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345"
+          },
+          "grant_type": {
+            "type": "string",
+            "example": "password"
+          }
+        }
+      },
+      "LoginResponseBody": {
+        "type": "object",
+        "properties": {
+          "token_type": {
+            "type": "string"
+          },
+          "access_token": {
+            "type": "string"
+          },
+          "expires_in": {
+            "type": "number"
+          },
+          "refresh_token": {
+            "type": "string"
+          },
+          "refresh_expires_in": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}
