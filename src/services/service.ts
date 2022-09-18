@@ -31,21 +31,17 @@ export async function login(
   return null;
 }
 
-// NOT IMPLEMENTED YET.
-export function getAllUsers(): User[] {
-  return [];
+export async function getAllUsers(accessToken: string): Promise<User[] | null> {
+  const users = await keycloak.getAllUsers(accessToken);
+  return users;
 }
 
-// NOT IMPLEMENTED YET.
-export function getUserById(id: string): User {
-  return {
-    email_verified: false,
-    name: "",
-    preferred_username: "",
-    given_name: "",
-    family_name: "",
-    email: "",
-  };
+export async function getUserById(
+  id: string,
+  accessToken: string
+): Promise<User | null> {
+  const user = await keycloak.getUserById(id, accessToken);
+  return user;
 }
 
 export async function createUser(

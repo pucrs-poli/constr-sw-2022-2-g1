@@ -16,17 +16,25 @@ export async function login(req: Request, res: Response): Promise<void> {
   }
 }
 
-// NOT IMPLEMENTED YET.
-export function getAllUsers(_req: Request, res: Response): void {
-  const result = service.getAllUsers();
-  res.json(result);
+export async function getAllUsers(req: Request, res: Response): Promise<void> {
+  const accessToken = req.headers.authorization as string;
+  const users = await service.getAllUsers(accessToken);
+  if (users) {
+    res.status(200).json(users);
+  } else {
+    res.status(400).send("Invalid access token.");
+  }
 }
 
-// NOT IMPLEMENTED YET.
-export function getUserById(req: Request, res: Response): void {
+export async function getUserById(req: Request, res: Response): Promise<void> {
   const id = req.params.id;
-  const result = service.getUserById(id);
-  res.json(result);
+  const accessToken = req.headers.authorization as string;
+  const user = await service.getUserById(id, accessToken);
+  if (user) {
+    res.status(200).json(user);
+  } else {
+    res.status(400).send("Invalid access token.");
+  }
 }
 
 export function createUser(req: Request, res: Response): void {

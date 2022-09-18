@@ -9,6 +9,7 @@ import {
 } from "../models/models";
 
 const TOKEN_ENDPOINT = `http://localhost:${KEYCLOAK_PORT}/auth/realms/${REALM_NAME}/protocol/openid-connect/token`;
+
 export async function getToken(
   body: TokenRequestBody
 ): Promise<TokenResponseBody | null> {
@@ -25,15 +26,52 @@ export async function getToken(
   }
 }
 
-const USER_INFO_ENDPOINT = `http://localhost:${KEYCLOAK_PORT}/auth/realms/${REALM_NAME}/protocol/openid-connect/userinfo`;
-export async function getUserInfo(accessToken: string): Promise<User | null> {
+const USERS_ENDPOINT = `http://localhost:${KEYCLOAK_PORT}/auth/admin/realms/${REALM_NAME}/users`;
+
+export async function getAllUsers(accessToken: string): Promise<User[] | null> {
   try {
-    const response = await axios.get(USER_INFO_ENDPOINT, {
+    const response = await axios.get(USERS_ENDPOINT, {
       headers: {
         Authorization: accessToken,
       },
     });
-    return response.data as User;
+    const users: User[] = response.data.map((user: any) => {
+      return {
+        sub: user.id,
+        preferred_username: user.username,
+        given_name: user.firstName || "",
+        family_name: user.lastName || "",
+        email: user.email || "",
+      };
+    });
+    return users;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+export async function getUserById(
+  id: string,
+  accessToken: string
+): Promise<User | null> {
+  try {
+    const response = await axios.get(`${USERS_ENDPOINT}/${id}`, {
+      headers: {
+        Authorization: accessToken,
+      },
+    });
+
+    console.log(response);
+
+    const user: User = {
+      sub: response.data.id,
+      preferred_username: response.data.username,
+      given_name: response.data.firstName || "",
+      family_name: response.data.lastName || "",
+      email: response.data.email || "",
+    };
+    return user;
   } catch (error) {
     console.error(error);
     return null;
@@ -56,7 +94,8 @@ export async function createUser(
         },
       }
     );
-    return response.data as User;
+    // POST returns no data, so we have to build the user object ourselves.
+    return {} as User;
   } catch (error) {
     console.error(error);
     return null;
