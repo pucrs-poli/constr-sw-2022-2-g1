@@ -89,7 +89,10 @@
         ],
         "responses": {
           "201": {
-            "description": "Created."
+            "description": "Created.",
+            "schema": {
+              "$ref": "#/components/schemas/User"
+            }
           },
           "401": {
             "description": "Unauthorized (Missing or Invalid Access Token)."
@@ -121,7 +124,10 @@
         ],
         "responses": {
           "200": {
-            "description": "Ok."
+            "description": "Ok.",
+            "schema": {
+              "$ref": "#/components/schemas/User"
+            }
           },
           "401": {
             "description": "Unauthorized (Missing or Invalid Access Token)."
@@ -139,6 +145,31 @@
       "UserID": {
         "type": "string",
         "example": "5e2052a2-1030-440a-a623-9095613d5c73"
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "sub": {
+            "type": "string",
+            "example": "36c924ba-7397-4253-a5b6-72a65bf707ae"
+          },
+          "preferred_username": {
+            "type": "string",
+            "example": "EduardoArruda700"
+          },
+          "given_name": {
+            "type": "string",
+            "example": "Eduardo"
+          },
+          "family_name": {
+            "type": "string",
+            "example": "Arruda"
+          },
+          "email": {
+            "type": "string",
+            "example": "arruda-professor@pucrs.br"
+          }
+        }
       },
       "LoginRequestBody": {
         "type": "object",

@@ -94,8 +94,18 @@ export async function createUser(
         },
       }
     );
-    // POST returns no data, so we have to build the user object ourselves.
-    return {} as User;
+    /*
+      POST returns no data, so we have to fetch the created user.
+    */
+    const userID = response.headers.location.split("/").slice(-1)[0];
+    const user = await getUserById(userID, accessToken);
+    return {
+      sub: user?.sub || "",
+      preferred_username: user?.preferred_username || "",
+      given_name: user?.given_name || "",
+      family_name: user?.family_name || "",
+      email: user?.email || "",
+    };
   } catch (error) {
     console.error(error);
     return null;
