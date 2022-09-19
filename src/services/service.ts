@@ -19,16 +19,13 @@ export async function login(
     grant_type: body.grant_type,
   };
   const tokenInfo = await keycloak.getToken(tokenBody);
-  if (!("error" in tokenInfo)) {
-    return {
-      token_type: tokenInfo.token_type,
-      access_token: tokenInfo.access_token,
-      expires_in: tokenInfo.expires_in,
-      refresh_token: tokenInfo.refresh_token,
-      refresh_expires_in: tokenInfo.refresh_expires_in,
-    };
-  }
-  return tokenInfo; // Error.
+  return {
+    token_type: tokenInfo.token_type,
+    access_token: tokenInfo.access_token,
+    expires_in: tokenInfo.expires_in,
+    refresh_token: tokenInfo.refresh_token,
+    refresh_expires_in: tokenInfo.refresh_expires_in,
+  };
 }
 
 export async function getAllUsers(accessToken: string): Promise<User[]> {
