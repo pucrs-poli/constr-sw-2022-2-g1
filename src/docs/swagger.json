@@ -17,7 +17,7 @@
     },
     {
       "name": "Users",
-      "description": "Fetch/Create users."
+      "description": "Fetch/Create/Update users."
     }
   ],
   "paths": {
@@ -40,6 +40,9 @@
             "schema": {
               "$ref": "#/components/schemas/LoginResponseBody"
             }
+          },
+          "401": {
+            "description": "Unauthorized."
           }
         }
       }
@@ -62,8 +65,8 @@
           "200": {
             "description": "Ok."
           },
-          "401": {
-            "description": "Unauthorized (Missing or Invalid Access Token)."
+          "400": {
+            "description": "Bad Request."
           }
         }
       },
@@ -94,8 +97,8 @@
               "$ref": "#/components/schemas/User"
             }
           },
-          "401": {
-            "description": "Unauthorized (Missing or Invalid Access Token)."
+          "400": {
+            "description": "Bad Request."
           }
         }
       }
@@ -129,14 +132,14 @@
               "$ref": "#/components/schemas/User"
             }
           },
-          "401": {
-            "description": "Unauthorized (Missing or Invalid Access Token)."
+          "400": {
+            "description": "Bad Request."
           }
         }
       },
       "put": {
         "tags": ["Users"],
-        "description": "Endpoint to update an user by ID.",
+        "description": "Endpoint to update an user.",
         "parameters": [
           {
             "name": "Authorization",
@@ -164,10 +167,37 @@
         ],
         "responses": {
           "200": {
-            "description": "Ok.",
+            "description": "Ok."
+          },
+          "401": {
+            "description": "Unauthorized (Missing or Invalid Access Token)."
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "description": "Endpoint to delete an user.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "description": "An admin access token.",
+            "in": "header",
             "schema": {
-              "$ref": "#/components/schemas/User"
+              "$ref": "#/components/schemas/AccessToken"
             }
+          },
+          {
+            "name": "id",
+            "description": "An user ID.",
+            "in": "path",
+            "schema": {
+              "$ref": "#/components/schemas/UserID"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok."
           },
           "401": {
             "description": "Unauthorized (Missing or Invalid Access Token)."

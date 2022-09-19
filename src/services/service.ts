@@ -5,12 +5,13 @@ import {
   LoginResponseBody,
   TokenRequestBody,
   User,
-} from "../models/models";
+} from "../interfaces/interfaces";
 import * as keycloak from "../external/keycloak";
+import { APIError } from "../errors/errors";
 
 export async function login(
   body: LoginRequestBody
-): Promise<LoginResponseBody | null> {
+): Promise<LoginResponseBody | APIError> {
   const tokenBody: TokenRequestBody = {
     client_id: body.client_id,
     client_secret: CLIENT_SECRET,
@@ -19,7 +20,7 @@ export async function login(
     grant_type: body.grant_type,
   };
   const tokenInfo = await keycloak.getToken(tokenBody);
-  if (tokenInfo) {
+  if (!("error" in tokenInfo)) {
     return {
       token_type: tokenInfo.token_type,
       access_token: tokenInfo.access_token,
@@ -28,48 +29,48 @@ export async function login(
       refresh_expires_in: tokenInfo.refresh_expires_in,
     };
   }
-  return null;
+  return tokenInfo; // Error.
 }
 
-export async function getAllUsers(accessToken: string): Promise<User[] | null> {
-  const users = await keycloak.getAllUsers(accessToken);
-  return users;
+export async function getAllUsers(
+  accessToken: string
+): Promise<User[] | APIError> {
+  return await keycloak.getAllUsers(accessToken);
 }
 
 export async function getUserById(
   id: string,
   accessToken: string
-): Promise<User | null> {
-  const user = await keycloak.getUserById(id, accessToken);
-  return user;
+): Promise<User | APIError> {
+  return await keycloak.getUserById(id, accessToken);
 }
 
 export async function createUser(
   user: CreateUserRequestBody,
   accessToken: string
-): Promise<User | null> {
-  const newUser = await keycloak.createUser(user, accessToken);
-  if (newUser) {
-    return newUser;
-  }
-  return null;
+): Promise<User | APIError> {
+  return await keycloak.createUser(user, accessToken);
+}
+
+export async function updateUser(
+  id: string,
+  user: CreateUserRequestBody,
+  accessToken: string
+): Promise<boolean | APIError> {
+  return await keycloak.updateUser(id, user, accessToken);
 }
 
 // NOT IMPLEMENTED YET.
-export async function updateUser(id: string, user: CreateUserRequestBody, accessToken: string): Promise<User | null> {
-  const updatedUser = await keycloak.updateUser(id, user, accessToken);
-  if (updatedUser) {
-    return updatedUser;
-  }
-  return null;
+export async function updateUserPassword(
+  id: string,
+  password: string
+): Promise<boolean | APIError> {
+  return false;
 }
 
-// NOT IMPLEMENTED YET.
-export function updateUserPassword(id: string, password: string): boolean {
-  return true;
-}
-
-// NOT IMPLEMENTED YET.
-export function deleteUser(id: string): boolean {
-  return true;
+export async function deleteUser(
+  id: string,
+  accessToken: string
+): Promise<boolean | APIError> {
+  return await keycloak.deleteUser(id, accessToken);
 }

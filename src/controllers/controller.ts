@@ -1,28 +1,28 @@
 import { Request, Response } from "express";
+import { APIError, handleError } from "../errors/errors";
 import {
   CreateUserRequestBody,
   LoginRequestBody,
-  User,
-} from "../models/models";
+} from "../interfaces/interfaces";
 import * as service from "../services/service";
 
 export async function login(req: Request, res: Response): Promise<void> {
   const body = req.body as LoginRequestBody;
   const loginInfo = await service.login(body);
-  if (loginInfo) {
+  if (!("error" in loginInfo)) {
     res.status(200).json(loginInfo);
   } else {
-    res.status(401).send("Invalid username or password.");
+    handleError(res, loginInfo);
   }
 }
 
 export async function getAllUsers(req: Request, res: Response): Promise<void> {
   const accessToken = req.headers.authorization as string;
   const users = await service.getAllUsers(accessToken);
-  if (users) {
+  if (!("error" in users)) {
     res.status(200).json(users);
   } else {
-    res.status(401).send("Invalid access token.");
+    handleError(res, users);
   }
 }
 
@@ -30,10 +30,10 @@ export async function getUserById(req: Request, res: Response): Promise<void> {
   const id = req.params.id;
   const accessToken = req.headers.authorization as string;
   const user = await service.getUserById(id, accessToken);
-  if (user) {
+  if (!("error" in user)) {
     res.status(200).json(user);
   } else {
-    res.status(401).send("Invalid access token.");
+    handleError(res, user);
   }
 }
 
@@ -41,23 +41,22 @@ export async function createUser(req: Request, res: Response): Promise<void> {
   const body = req.body as CreateUserRequestBody;
   const accessToken = req.headers.authorization as string;
   const newUser = await service.createUser(body, accessToken);
-  if (newUser) {
+  if (!("error" in newUser)) {
     res.status(201).json(newUser);
   } else {
-    res.status(401).send("Invalid access token.");
+    handleError(res, newUser);
   }
 }
 
-// NOT IMPLEMENTED YET.
 export async function updateUser(req: Request, res: Response): Promise<void> {
   const id = req.params.id;
   const body = req.body as CreateUserRequestBody;
   const accessToken = req.headers.authorization as string;
-  const updatedUser = await service.updateUser(id, body, accessToken);
-  if (updatedUser) {
-    res.status(200).json(updatedUser);
+  const updated = await service.updateUser(id, body, accessToken);
+  if (updated === true) {
+    res.status(200).json({});
   } else {
-    res.status(401).send("Invalid access token.");
+    handleError(res, updated as APIError);
   }
 }
 
@@ -68,13 +67,21 @@ export async function updateUserPassword(
 ): Promise<void> {
   const id = req.params.id;
   const password = req.body.password as string;
-  const result = await service.updateUserPassword(id, password);
-  res.json(result);
+  const updated = await service.updateUserPassword(id, password);
+  if (updated === true) {
+    res.status(200).json({});
+  } else {
+    handleError(res, updated as APIError);
+  }
 }
 
-// NOT IMPLEMENTED YET.
 export async function deleteUser(req: Request, res: Response): Promise<void> {
   const id = req.params.id;
-  const result = await service.deleteUser(id);
-  res.json(result);
+  const accessToken = req.headers.authorization as string;
+  const deleted = await service.deleteUser(id, accessToken);
+  if (deleted === true) {
+    res.status(200).json({});
+  } else {
+    handleError(res, deleted as APIError);
+  }
 }
