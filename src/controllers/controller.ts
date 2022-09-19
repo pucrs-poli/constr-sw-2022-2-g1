@@ -37,10 +37,10 @@ export async function getUserById(req: Request, res: Response): Promise<void> {
   }
 }
 
-export function createUser(req: Request, res: Response): void {
+export async function createUser(req: Request, res: Response): Promise<void> {
   const body = req.body as CreateUserRequestBody;
   const accessToken = req.headers.authorization as string;
-  const newUser = service.createUser(body, accessToken);
+  const newUser = await service.createUser(body, accessToken);
   if (newUser) {
     res.status(201).json(newUser);
   } else {
@@ -49,23 +49,23 @@ export function createUser(req: Request, res: Response): void {
 }
 
 // NOT IMPLEMENTED YET.
-export function updateUser(req: Request, res: Response): void {
+export async function updateUser(req: Request, res: Response): Promise<void> {
   const body = req.body as User;
-  const result = service.updateUser(body);
+  const result = await service.updateUser(body);
   res.json(result);
 }
 
 // NOT IMPLEMENTED YET.
-export function updateUserPassword(req: Request, res: Response): void {
+export async function updateUserPassword(req: Request, res: Response): Promise<void> {
   const id = req.params.id;
   const password = req.body.password as string;
-  const result = service.updateUserPassword(id, password);
+  const result = await service.updateUserPassword(id, password);
   res.json(result);
 }
 
 // NOT IMPLEMENTED YET.
-export function deleteUser(req: Request, res: Response): void {
+export async function deleteUser(req: Request, res: Response): Promise<void> {
   const id = req.params.id;
-  const result = service.deleteUser(id);
+  const result = await service.deleteUser(id);
   res.json(result);
 }
