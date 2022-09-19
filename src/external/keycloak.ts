@@ -129,7 +129,7 @@ export async function updateUser(
   id: string,
   body: CreateUserRequestBody,
   accessToken: string
-): Promise<boolean> {
+): Promise<void> {
   try {
     await axios.put(
       `${USERS_ENDPOINT}/${id}`,
@@ -141,7 +141,6 @@ export async function updateUser(
         },
       }
     );
-    return true;
   } catch (error: any) {
     throw new APIError(
       400,
@@ -155,14 +154,13 @@ export async function updateUser(
 export async function deleteUser(
   id: string,
   accessToken: string
-): Promise<boolean> {
+): Promise<void> {
   try {
     await axios.delete(`${USERS_ENDPOINT}/${id}`, {
       headers: {
         Authorization: accessToken,
       },
     });
-    return true;
   } catch (error: any) {
     throw new APIError(
       400,

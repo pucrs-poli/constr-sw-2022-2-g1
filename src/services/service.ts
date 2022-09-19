@@ -53,7 +53,7 @@ export async function updateUser(
   id: string,
   user: CreateUserRequestBody,
   accessToken: string
-): Promise<boolean> {
+): Promise<void> {
   return await keycloak.updateUser(id, user, accessToken);
 }
 
@@ -61,13 +61,11 @@ export async function updateUser(
 export async function updateUserPassword(
   id: string,
   password: string
-): Promise<boolean> {
-  return false;
-}
+): Promise<void> {}
 
 export async function deleteUser(
   id: string,
   accessToken: string
-): Promise<boolean> {
+): Promise<void> {
   return await keycloak.deleteUser(id, accessToken);
 }
