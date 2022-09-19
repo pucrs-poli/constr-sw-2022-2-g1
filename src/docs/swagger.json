@@ -169,8 +169,43 @@
           "200": {
             "description": "Ok."
           },
-          "401": {
-            "description": "Unauthorized (Missing or Invalid Access Token)."
+          "400": {
+            "description": "Bad Request."
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Users"],
+        "description": "Endpoint to update the password of an user.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "description": "An admin access token.",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/AccessToken"
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "string",
+                  "example": "my-password-123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok."
+          },
+          "400": {
+            "description": "Bad Request."
           }
         }
       },
@@ -199,8 +234,8 @@
           "200": {
             "description": "Ok."
           },
-          "401": {
-            "description": "Unauthorized (Missing or Invalid Access Token)."
+          "400": {
+            "description": "Bad Request."
           }
         }
       }

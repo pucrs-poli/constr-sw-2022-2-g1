@@ -131,16 +131,12 @@ export async function updateUser(
   accessToken: string
 ): Promise<void> {
   try {
-    await axios.put(
-      `${USERS_ENDPOINT}/${id}`,
-      { ...body, enabled: true },
-      {
-        headers: {
-          Authorization: accessToken,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    await axios.put(`${USERS_ENDPOINT}/${id}`, body, {
+      headers: {
+        Authorization: accessToken,
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error: any) {
     throw new APIError(
       400,
