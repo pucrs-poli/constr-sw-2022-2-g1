@@ -67,6 +67,9 @@
           },
           "400": {
             "description": "Bad Request."
+          },
+          "401": {
+            "description": "Unauthorized (Missing Token or Invalid Token Type)."
           }
         }
       },
@@ -99,6 +102,9 @@
           },
           "400": {
             "description": "Bad Request."
+          },
+          "401": {
+            "description": "Unauthorized (Missing Token or Invalid Token Type)."
           }
         }
       }
@@ -171,6 +177,9 @@
           },
           "400": {
             "description": "Bad Request."
+          },
+          "401": {
+            "description": "Unauthorized (Missing Token or Invalid Token Type)."
           }
         }
       },
@@ -206,6 +215,9 @@
           },
           "400": {
             "description": "Bad Request."
+          },
+          "401": {
+            "description": "Unauthorized (Missing Token or Invalid Token Type)."
           }
         }
       },
@@ -236,6 +248,9 @@
           },
           "400": {
             "description": "Bad Request."
+          },
+          "401": {
+            "description": "Unauthorized (Missing Token or Invalid Token Type)."
           }
         }
       }
