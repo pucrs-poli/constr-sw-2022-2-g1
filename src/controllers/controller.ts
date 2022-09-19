@@ -42,7 +42,7 @@ export async function createUser(req: Request, res: Response): Promise<void> {
   const accessToken = req.headers.authorization as string;
   try {
     const newUser = await service.createUser(body, accessToken);
-    res.status(200).json(newUser);
+    res.status(201).json(newUser);
   } catch (error) {
     handleError(res, error as APIError);
   }
@@ -54,22 +54,22 @@ export async function updateUser(req: Request, res: Response): Promise<void> {
   const accessToken = req.headers.authorization as string;
   try {
     await service.updateUser(id, body, accessToken);
-    res.status(200).json({});
+    res.status(204).json({});
   } catch (error) {
     handleError(res, error as APIError);
   }
 }
 
-// NOT IMPLEMENTED YET.
 export async function updateUserPassword(
   req: Request,
   res: Response
 ): Promise<void> {
   const id = req.params.id;
   const password = req.body.password as string;
+  const accessToken = req.headers.authorization as string;
   try {
-    await service.updateUserPassword(id, password);
-    res.status(200).json({});
+    await service.updateUserPassword(id, password, accessToken);
+    res.status(204).json({});
   } catch (error) {
     handleError(res, error as APIError);
   }
@@ -80,7 +80,7 @@ export async function deleteUser(req: Request, res: Response): Promise<void> {
   const accessToken = req.headers.authorization as string;
   try {
     await service.deleteUser(id, accessToken);
-    res.status(200).json({});
+    res.status(204).json({});
   } catch (error) {
     handleError(res, error as APIError);
   }

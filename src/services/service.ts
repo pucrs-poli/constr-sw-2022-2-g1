@@ -51,18 +51,20 @@ export async function updateUser(
   user: CreateUserRequestBody,
   accessToken: string
 ): Promise<void> {
-  return await keycloak.updateUser(id, user, accessToken);
+  await keycloak.updateUser(id, user, accessToken);
 }
 
-// NOT IMPLEMENTED YET.
 export async function updateUserPassword(
   id: string,
-  password: string
-): Promise<void> {}
+  password: string,
+  accessToken: string
+): Promise<void> {
+  await keycloak.updateUserPassword(id, password, accessToken);
+}
 
 export async function deleteUser(
   id: string,
   accessToken: string
 ): Promise<void> {
-  return await keycloak.deleteUser(id, accessToken);
+  await keycloak.deleteUser(id, accessToken);
 }

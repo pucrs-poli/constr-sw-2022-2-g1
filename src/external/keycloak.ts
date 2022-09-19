@@ -23,7 +23,7 @@ export async function getToken(
     return response.data as TokenResponseBody;
   } catch (error: any) {
     throw new APIError(
-      401,
+      400,
       error?.response.data.error_description ||
         error?.response.data.error ||
         "Invalid username or password."
@@ -163,6 +163,33 @@ export async function deleteUser(
       error?.response.data.error_description ||
         error?.response.data.error ||
         "Error deleting user."
+    );
+  }
+}
+
+export async function updateUserPassword(
+  id: string,
+  password: string,
+  accessToken: string
+): Promise<void> {
+  const UPDATE_PASSWORD_ENDPOINT = `http://localhost:${KEYCLOAK_PORT}/auth/admin/realms/${REALM_NAME}/users/${id}/reset-password`;
+  try {
+    await axios.put(
+      UPDATE_PASSWORD_ENDPOINT,
+      { type: "password", value: password, temporary: false },
+      {
+        headers: {
+          Authorization: accessToken,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  } catch (error: any) {
+    throw new APIError(
+      400,
+      error?.response.data.error_description ||
+        error?.response.data.error ||
+        "Error updating password."
     );
   }
 }
