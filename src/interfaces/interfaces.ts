@@ -1,7 +1,7 @@
 export interface LoginRequestBody {
   client_id: string;
   username: string;
-  password: string;
+  password: "password";
   grant_type: string;
 }
 export interface LoginResponseBody {
@@ -42,4 +42,10 @@ export interface TokenResponseBody {
   "not-before-policy": number;
   session_state: string;
   scope: string;
+}
+export interface RefreshTokenRequestBody {
+  client_id: string;
+  client_secret: string;
+  grant_type: "refresh_token";
+  refresh_token: string;
 }

@@ -7,6 +7,7 @@ import {
   TokenResponseBody,
   CreateUserRequestBody,
   User,
+  RefreshTokenRequestBody,
 } from "../interfaces/interfaces";
 
 const TOKEN_ENDPOINT = `http://localhost:${KEYCLOAK_PORT}/auth/realms/${REALM_NAME}/protocol/openid-connect/token`;
@@ -27,6 +28,24 @@ export async function getToken(
       error?.response.data.error_description ||
         error?.response.data.error ||
         "Invalid username or password."
+    );
+  }
+}
+
+export async function refreshToken(body: RefreshTokenRequestBody) {
+  try {
+    const response = await axios.post(TOKEN_ENDPOINT, qs.stringify(body), {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    });
+    return response.data as TokenResponseBody;
+  } catch (error: any) {
+    throw new APIError(
+      400,
+      error?.response.data.error_description ||
+        error?.response.data.error ||
+        "Invalid refresh token."
     );
   }
 }

@@ -51,16 +51,6 @@
       "get": {
         "tags": ["Users"],
         "description": "Endpoint to fetch all users.",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "description": "An admin access token.",
-            "in": "header",
-            "schema": {
-              "$ref": "#/components/schemas/AccessToken"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Ok."
@@ -69,7 +59,7 @@
             "description": "Bad Request."
           },
           "401": {
-            "description": "Unauthorized (Missing Token or Invalid Token Type)."
+            "description": "Unauthorized (Not Logged In)."
           }
         }
       },
@@ -77,14 +67,6 @@
         "tags": ["Users"],
         "description": "Endpoint to create an user.",
         "parameters": [
-          {
-            "name": "Authorization",
-            "description": "An admin access token.",
-            "in": "header",
-            "schema": {
-              "$ref": "#/components/schemas/AccessToken"
-            }
-          },
           {
             "name": "body",
             "in": "body",
@@ -104,7 +86,7 @@
             "description": "Bad Request."
           },
           "401": {
-            "description": "Unauthorized (Missing Token or Invalid Token Type)."
+            "description": "Unauthorized (Not Logged In)."
           }
         }
       }
@@ -114,14 +96,6 @@
         "tags": ["Users"],
         "description": "Endpoint to fetch an user by ID.",
         "parameters": [
-          {
-            "name": "Authorization",
-            "description": "An admin access token.",
-            "in": "header",
-            "schema": {
-              "$ref": "#/components/schemas/AccessToken"
-            }
-          },
           {
             "name": "id",
             "description": "An user ID.",
@@ -138,8 +112,8 @@
               "$ref": "#/components/schemas/User"
             }
           },
-          "400": {
-            "description": "Bad Request."
+          "401": {
+            "description": "Unauthorized (Not Logged In)."
           }
         }
       },
@@ -147,14 +121,6 @@
         "tags": ["Users"],
         "description": "Endpoint to update an user.",
         "parameters": [
-          {
-            "name": "Authorization",
-            "description": "An admin access token.",
-            "in": "header",
-            "schema": {
-              "$ref": "#/components/schemas/AccessToken"
-            }
-          },
           {
             "name": "id",
             "description": "An user ID.",
@@ -179,7 +145,7 @@
             "description": "Bad Request."
           },
           "401": {
-            "description": "Unauthorized (Missing Token or Invalid Token Type)."
+            "description": "Unauthorized (Not Logged In)."
           }
         }
       },
@@ -187,14 +153,6 @@
         "tags": ["Users"],
         "description": "Endpoint to update the password of an user.",
         "parameters": [
-          {
-            "name": "Authorization",
-            "description": "An admin access token.",
-            "in": "header",
-            "schema": {
-              "$ref": "#/components/schemas/AccessToken"
-            }
-          },
           {
             "name": "id",
             "description": "An user ID.",
@@ -225,7 +183,7 @@
             "description": "Bad Request."
           },
           "401": {
-            "description": "Unauthorized (Missing Token or Invalid Token Type)."
+            "description": "Unauthorized (Not Logged In)."
           }
         }
       },
@@ -233,14 +191,6 @@
         "tags": ["Users"],
         "description": "Endpoint to delete an user.",
         "parameters": [
-          {
-            "name": "Authorization",
-            "description": "An admin access token.",
-            "in": "header",
-            "schema": {
-              "$ref": "#/components/schemas/AccessToken"
-            }
-          },
           {
             "name": "id",
             "description": "An user ID.",
@@ -258,7 +208,7 @@
             "description": "Bad Request."
           },
           "401": {
-            "description": "Unauthorized (Missing Token or Invalid Token Type)."
+            "description": "Unauthorized (Not Logged In)."
           }
         }
       }
@@ -266,10 +216,6 @@
   },
   "components": {
     "schemas": {
-      "AccessToken": {
-        "type": "string",
-        "example": "Bearer <YOUR_TOKEN>"
-      },
       "UserID": {
         "type": "string",
         "example": "5e2052a2-1030-440a-a623-9095613d5c73"

@@ -5,7 +5,6 @@ export const KEYCLOAK_PORT = 8080;
 
 export const REALM_NAME = "constr-sw-2022-2";
 
-export const CLIENT_ID = "grupo1";
 export const CLIENT_SECRET = "pCHwUi4ZHW9RnQzMN1yMGjpPxBtvufkG";
 
 /*

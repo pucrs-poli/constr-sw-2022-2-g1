@@ -16,10 +16,9 @@ export async function login(req: Request, res: Response): Promise<void> {
   }
 }
 
-export async function getAllUsers(req: Request, res: Response): Promise<void> {
-  const accessToken = req.headers.authorization as string;
+export async function getAllUsers(_req: Request, res: Response): Promise<void> {
   try {
-    const users = await service.getAllUsers(accessToken);
+    const users = await service.getAllUsers();
     res.status(200).json(users);
   } catch (error) {
     handleError(res, error as APIError);
@@ -28,9 +27,8 @@ export async function getAllUsers(req: Request, res: Response): Promise<void> {
 
 export async function getUserById(req: Request, res: Response): Promise<void> {
   const id = req.params.id;
-  const accessToken = req.headers.authorization as string;
   try {
-    const user = await service.getUserById(id, accessToken);
+    const user = await service.getUserById(id);
     res.status(200).json(user);
   } catch (error) {
     handleError(res, error as APIError);
@@ -39,9 +37,8 @@ export async function getUserById(req: Request, res: Response): Promise<void> {
 
 export async function createUser(req: Request, res: Response): Promise<void> {
   const body = req.body as CreateUserRequestBody;
-  const accessToken = req.headers.authorization as string;
   try {
-    const newUser = await service.createUser(body, accessToken);
+    const newUser = await service.createUser(body);
     res.status(201).json(newUser);
   } catch (error) {
     handleError(res, error as APIError);
@@ -51,9 +48,8 @@ export async function createUser(req: Request, res: Response): Promise<void> {
 export async function updateUser(req: Request, res: Response): Promise<void> {
   const id = req.params.id;
   const body = req.body as CreateUserRequestBody;
-  const accessToken = req.headers.authorization as string;
   try {
-    await service.updateUser(id, body, accessToken);
+    await service.updateUser(id, body);
     res.status(204).json({});
   } catch (error) {
     handleError(res, error as APIError);
@@ -66,9 +62,8 @@ export async function updateUserPassword(
 ): Promise<void> {
   const id = req.params.id;
   const password = req.body.password as string;
-  const accessToken = req.headers.authorization as string;
   try {
-    await service.updateUserPassword(id, password, accessToken);
+    await service.updateUserPassword(id, password);
     res.status(204).json({});
   } catch (error) {
     handleError(res, error as APIError);
@@ -77,9 +72,8 @@ export async function updateUserPassword(
 
 export async function deleteUser(req: Request, res: Response): Promise<void> {
   const id = req.params.id;
-  const accessToken = req.headers.authorization as string;
   try {
-    await service.deleteUser(id, accessToken);
+    await service.deleteUser(id);
     res.status(204).json({});
   } catch (error) {
     handleError(res, error as APIError);
