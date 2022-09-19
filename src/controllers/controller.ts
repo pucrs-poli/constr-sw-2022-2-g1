@@ -44,7 +44,7 @@ export async function createUser(req: Request, res: Response): Promise<void> {
   if (newUser) {
     res.status(201).json(newUser);
   } else {
-    res.status(400).send("Bad Request.");
+    res.status(401).send("Invalid access token.");
   }
 }
 
@@ -56,7 +56,10 @@ export async function updateUser(req: Request, res: Response): Promise<void> {
 }
 
 // NOT IMPLEMENTED YET.
-export async function updateUserPassword(req: Request, res: Response): Promise<void> {
+export async function updateUserPassword(
+  req: Request,
+  res: Response
+): Promise<void> {
   const id = req.params.id;
   const password = req.body.password as string;
   const result = await service.updateUserPassword(id, password);

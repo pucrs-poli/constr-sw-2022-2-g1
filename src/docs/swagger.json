@@ -91,9 +91,6 @@
           "201": {
             "description": "Created."
           },
-          "400": {
-            "description": "Bad Request."
-          },
           "401": {
             "description": "Unauthorized (Missing or Invalid Access Token)."
           }
@@ -201,7 +198,7 @@
             "example": "Tyson"
           },
           "email": {
-            "type": "number",
+            "type": "string",
             "example": "george.tyson@gmail.com"
           },
           "username": {
