@@ -99,6 +99,38 @@
           }
         }
       }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": ["Users"],
+        "description": "Endpoint to fetch an user by ID.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "description": "An admin access token.",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/AccessToken"
+            }
+          },
+          {
+            "name": "id",
+            "description": "An user ID.",
+            "in": "path",
+            "schema": {
+              "$ref": "#/components/schemas/UserID"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok."
+          },
+          "401": {
+            "description": "Unauthorized (Missing or Invalid Access Token)."
+          }
+        }
+      }
     }
   },
   "components": {
@@ -106,6 +138,10 @@
       "AccessToken": {
         "type": "string",
         "example": "Bearer <YOUR_TOKEN>"
+      },
+      "UserID": {
+        "type": "string",
+        "example": "5e2052a2-1030-440a-a623-9095613d5c73"
       },
       "LoginRequestBody": {
         "type": "object",
