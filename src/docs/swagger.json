@@ -3,7 +3,7 @@
   "info": {
     "version": "1.0.0",
     "title": "Keycloak REST API",
-    "description": "REST API that makes use of Keycloak."
+    "description": "REST API that makes use of Keycloak to manage users."
   },
   "host": "localhost:3000",
   "basePath": "/",
@@ -63,7 +63,7 @@
             "description": "Ok."
           },
           "401": {
-            "description": "Unauthorized (No Access Token)."
+            "description": "Unauthorized (Missing or Invalid Access Token)."
           }
         }
       },
@@ -91,8 +91,11 @@
           "201": {
             "description": "Created."
           },
+          "400": {
+            "description": "Bad Request."
+          },
           "401": {
-            "description": "Unauthorized (No Access Token)."
+            "description": "Unauthorized (Missing or Invalid Access Token)."
           }
         }
       }

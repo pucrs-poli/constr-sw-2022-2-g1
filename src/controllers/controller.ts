@@ -22,7 +22,7 @@ export async function getAllUsers(req: Request, res: Response): Promise<void> {
   if (users) {
     res.status(200).json(users);
   } else {
-    res.status(400).send("Invalid access token.");
+    res.status(401).send("Invalid access token.");
   }
 }
 
@@ -33,7 +33,7 @@ export async function getUserById(req: Request, res: Response): Promise<void> {
   if (user) {
     res.status(200).json(user);
   } else {
-    res.status(400).send("Invalid access token.");
+    res.status(401).send("Invalid access token.");
   }
 }
 
