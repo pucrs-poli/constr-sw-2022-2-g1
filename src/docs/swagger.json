@@ -13,7 +13,7 @@
   "tags": [
     {
       "name": "Login",
-      "description": "Login as an user."
+      "description": "Login as an administrator."
     },
     {
       "name": "Users",
@@ -24,7 +24,7 @@
     "/login": {
       "post": {
         "tags": ["Login"],
-        "description": "Endpoint to login as an user.",
+        "description": "Endpoint to login as an administrator.",
         "parameters": [
           {
             "name": "body",
