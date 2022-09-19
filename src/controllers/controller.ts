@@ -50,9 +50,15 @@ export async function createUser(req: Request, res: Response): Promise<void> {
 
 // NOT IMPLEMENTED YET.
 export async function updateUser(req: Request, res: Response): Promise<void> {
-  const body = req.body as User;
-  const result = await service.updateUser(body);
-  res.json(result);
+  const id = req.params.id;
+  const body = req.body as CreateUserRequestBody;
+  const accessToken = req.headers.authorization as string;
+  const updatedUser = await service.updateUser(id, body, accessToken);
+  if (updatedUser) {
+    res.status(200).json(updatedUser);
+  } else {
+    res.status(401).send("Invalid access token.");
+  }
 }
 
 // NOT IMPLEMENTED YET.

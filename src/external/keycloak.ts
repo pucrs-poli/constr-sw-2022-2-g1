@@ -78,6 +78,7 @@ export async function getUserById(
   }
 }
 
+// endpoint equals to USER_ENDOIUNT
 const CREATE_USER_ENDPOINT = `http://localhost:${KEYCLOAK_PORT}/auth/admin/realms/${REALM_NAME}/users`;
 export async function createUser(
   body: CreateUserRequestBody,
@@ -106,6 +107,28 @@ export async function createUser(
       family_name: user?.family_name || "",
       email: user?.email || "",
     };
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+export async function updateUser(
+  id: string,
+  body: CreateUserRequestBody,
+  accessToken: string
+): Promise<User | null> {
+  try {
+    const response = await axios.put(`${USERS_ENDPOINT}/${id}`,
+      { ...body, enabled: true },
+      {
+        headers: {
+          Authorization: accessToken,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return {} as User;
   } catch (error) {
     console.error(error);
     return null;

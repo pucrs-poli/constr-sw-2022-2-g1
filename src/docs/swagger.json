@@ -133,6 +133,46 @@
             "description": "Unauthorized (Missing or Invalid Access Token)."
           }
         }
+      },
+      "put": {
+        "tags": ["Users"],
+        "description": "Endpoint to update an user by ID.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "description": "An admin access token.",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/AccessToken"
+            }
+          },
+          {
+            "name": "id",
+            "description": "An user ID.",
+            "in": "path",
+            "schema": {
+              "$ref": "#/components/schemas/UserID"
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/components/schemas/CreateUserRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok.",
+            "schema": {
+              "$ref": "#/components/schemas/User"
+            }
+          },
+          "401": {
+            "description": "Unauthorized (Missing or Invalid Access Token)."
+          }
+        }
       }
     }
   },

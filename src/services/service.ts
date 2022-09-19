@@ -56,15 +56,12 @@ export async function createUser(
 }
 
 // NOT IMPLEMENTED YET.
-export function updateUser(user: User): User {
-  return {
-    email_verified: false,
-    name: "",
-    preferred_username: "",
-    given_name: "",
-    family_name: "",
-    email: "",
-  };
+export async function updateUser(id: string, user: CreateUserRequestBody, accessToken: string): Promise<User | null> {
+  const updatedUser = await keycloak.updateUser(id, user, accessToken);
+  if (updatedUser) {
+    return updatedUser;
+  }
+  return null;
 }
 
 // NOT IMPLEMENTED YET.
