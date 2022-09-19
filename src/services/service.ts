@@ -7,11 +7,10 @@ import {
   User,
 } from "../interfaces/interfaces";
 import * as keycloak from "../external/keycloak";
-import { APIError } from "../errors/errors";
 
 export async function login(
   body: LoginRequestBody
-): Promise<LoginResponseBody | APIError> {
+): Promise<LoginResponseBody> {
   const tokenBody: TokenRequestBody = {
     client_id: body.client_id,
     client_secret: CLIENT_SECRET,
@@ -32,23 +31,21 @@ export async function login(
   return tokenInfo; // Error.
 }
 
-export async function getAllUsers(
-  accessToken: string
-): Promise<User[] | APIError> {
+export async function getAllUsers(accessToken: string): Promise<User[]> {
   return await keycloak.getAllUsers(accessToken);
 }
 
 export async function getUserById(
   id: string,
   accessToken: string
-): Promise<User | APIError> {
+): Promise<User> {
   return await keycloak.getUserById(id, accessToken);
 }
 
 export async function createUser(
   user: CreateUserRequestBody,
   accessToken: string
-): Promise<User | APIError> {
+): Promise<User> {
   return await keycloak.createUser(user, accessToken);
 }
 
@@ -56,7 +53,7 @@ export async function updateUser(
   id: string,
   user: CreateUserRequestBody,
   accessToken: string
-): Promise<boolean | APIError> {
+): Promise<boolean> {
   return await keycloak.updateUser(id, user, accessToken);
 }
 
@@ -64,13 +61,13 @@ export async function updateUser(
 export async function updateUserPassword(
   id: string,
   password: string
-): Promise<boolean | APIError> {
+): Promise<boolean> {
   return false;
 }
 
 export async function deleteUser(
   id: string,
   accessToken: string
-): Promise<boolean | APIError> {
+): Promise<boolean> {
   return await keycloak.deleteUser(id, accessToken);
 }

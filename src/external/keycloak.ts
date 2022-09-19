@@ -13,7 +13,7 @@ const TOKEN_ENDPOINT = `http://localhost:${KEYCLOAK_PORT}/auth/realms/${REALM_NA
 
 export async function getToken(
   body: TokenRequestBody
-): Promise<TokenResponseBody | APIError> {
+): Promise<TokenResponseBody> {
   try {
     const response = await axios.post(TOKEN_ENDPOINT, qs.stringify(body), {
       headers: {
@@ -22,22 +22,18 @@ export async function getToken(
     });
     return response.data as TokenResponseBody;
   } catch (error: any) {
-    console.error(error);
-    return {
-      statusCode: 401,
-      error:
-        error?.response.data.error_description ||
+    throw new APIError(
+      401,
+      error?.response.data.error_description ||
         error?.response.data.error ||
-        "Invalid username or password.",
-    };
+        "Invalid username or password."
+    );
   }
 }
 
 const USERS_ENDPOINT = `http://localhost:${KEYCLOAK_PORT}/auth/admin/realms/${REALM_NAME}/users`;
 
-export async function getAllUsers(
-  accessToken: string
-): Promise<User[] | APIError> {
+export async function getAllUsers(accessToken: string): Promise<User[]> {
   try {
     const response = await axios.get(USERS_ENDPOINT, {
       headers: {
@@ -55,21 +51,19 @@ export async function getAllUsers(
     });
     return users;
   } catch (error: any) {
-    console.error(error);
-    return {
-      statusCode: 400,
-      error:
-        error?.response.data.error_description ||
+    throw new APIError(
+      400,
+      error?.response.data.error_description ||
         error?.response.data.error ||
-        "Error fetching all users.",
-    };
+        "Error fetching all users."
+    );
   }
 }
 
 export async function getUserById(
   id: string,
   accessToken: string
-): Promise<User | APIError> {
+): Promise<User> {
   try {
     const response = await axios.get(`${USERS_ENDPOINT}/${id}`, {
       headers: {
@@ -85,21 +79,19 @@ export async function getUserById(
     };
     return user;
   } catch (error: any) {
-    console.error(error);
-    return {
-      statusCode: 400,
-      error:
-        error?.response.data.error_description ||
+    throw new APIError(
+      400,
+      error?.response.data.error_description ||
         error?.response.data.error ||
-        "Error getting user by ID.",
-    };
+        "Error getting user by ID."
+    );
   }
 }
 
 export async function createUser(
   body: CreateUserRequestBody,
   accessToken: string
-): Promise<User | APIError> {
+): Promise<User> {
   try {
     const response = await axios.post(
       USERS_ENDPOINT,
@@ -116,12 +108,6 @@ export async function createUser(
     */
     const userID = response.headers.location.split("/").slice(-1)[0];
     const user = await getUserById(userID, accessToken);
-    if ("error" in user) {
-      return {
-        statusCode: 400,
-        error: "Error creating user.",
-      };
-    }
     return {
       sub: user?.sub || "",
       preferred_username: user?.preferred_username || "",
@@ -130,14 +116,12 @@ export async function createUser(
       email: user?.email || "",
     };
   } catch (error: any) {
-    console.error(error);
-    return {
-      statusCode: 400,
-      error:
-        error?.response.data.error_description ||
+    throw new APIError(
+      400,
+      error?.response.data.error_description ||
         error?.response.data.error ||
-        "Error creating user.",
-    };
+        "Error creating user."
+    );
   }
 }
 
@@ -145,7 +129,7 @@ export async function updateUser(
   id: string,
   body: CreateUserRequestBody,
   accessToken: string
-): Promise<boolean | APIError> {
+): Promise<boolean> {
   try {
     await axios.put(
       `${USERS_ENDPOINT}/${id}`,
@@ -159,21 +143,19 @@ export async function updateUser(
     );
     return true;
   } catch (error: any) {
-    console.error(error);
-    return {
-      statusCode: 400,
-      error:
-        error?.response.data.error_description ||
+    throw new APIError(
+      400,
+      error?.response.data.error_description ||
         error?.response.data.error ||
-        "Error updating user.",
-    };
+        "Error updating user."
+    );
   }
 }
 
 export async function deleteUser(
   id: string,
   accessToken: string
-): Promise<boolean | APIError> {
+): Promise<boolean> {
   try {
     await axios.delete(`${USERS_ENDPOINT}/${id}`, {
       headers: {
@@ -182,13 +164,11 @@ export async function deleteUser(
     });
     return true;
   } catch (error: any) {
-    console.error(error);
-    return {
-      statusCode: 400,
-      error:
-        error?.response.data.error_description ||
+    throw new APIError(
+      400,
+      error?.response.data.error_description ||
         error?.response.data.error ||
-        "Error deleting user.",
-    };
+        "Error deleting user."
+    );
   }
 }
