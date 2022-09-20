@@ -8,7 +8,7 @@ export function checkAccessToken(
 ) {
   const accessToken = GlobalToken.getAccessToken();
   if (!accessToken) {
-    return res.status(401).send("Unauthorized. No access token provided.");
+    return res.status(401).send("Unauthorized. Not logged in.");
   }
   next();
 }

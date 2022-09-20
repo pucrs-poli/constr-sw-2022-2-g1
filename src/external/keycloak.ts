@@ -24,7 +24,7 @@ export async function getToken(
     return response.data as TokenResponseBody;
   } catch (error: any) {
     throw new APIError(
-      400,
+      error?.response.status || 400,
       error?.response.data.error_description ||
         error?.response.data.error ||
         "Invalid username or password."
@@ -42,7 +42,7 @@ export async function refreshToken(body: RefreshTokenRequestBody) {
     return response.data as TokenResponseBody;
   } catch (error: any) {
     throw new APIError(
-      400,
+      error?.response.status || 400,
       error?.response.data.error_description ||
         error?.response.data.error ||
         "Invalid refresh token."
@@ -71,7 +71,7 @@ export async function getAllUsers(accessToken: string): Promise<User[]> {
     return users;
   } catch (error: any) {
     throw new APIError(
-      400,
+      error?.response.status || 400,
       error?.response.data.error_description ||
         error?.response.data.error ||
         "Error fetching all users."
@@ -99,7 +99,7 @@ export async function getUserById(
     return user;
   } catch (error: any) {
     throw new APIError(
-      400,
+      error?.response.status || 400,
       error?.response.data.error_description ||
         error?.response.data.error ||
         "Error getting user by ID."
@@ -136,7 +136,7 @@ export async function createUser(
     };
   } catch (error: any) {
     throw new APIError(
-      400,
+      error?.response.status || 400,
       error?.response.data.error_description ||
         error?.response.data.error ||
         "Error creating user."
@@ -158,7 +158,7 @@ export async function updateUser(
     });
   } catch (error: any) {
     throw new APIError(
-      400,
+      error?.response.status || 400,
       error?.response.data.error_description ||
         error?.response.data.error ||
         "Error updating user."
@@ -178,7 +178,7 @@ export async function deleteUser(
     });
   } catch (error: any) {
     throw new APIError(
-      400,
+      error?.response.status || 400,
       error?.response.data.error_description ||
         error?.response.data.error ||
         "Error deleting user."
@@ -205,7 +205,7 @@ export async function updateUserPassword(
     );
   } catch (error: any) {
     throw new APIError(
-      400,
+      error?.response.status || 400,
       error?.response.data.error_description ||
         error?.response.data.error ||
         "Error updating password."

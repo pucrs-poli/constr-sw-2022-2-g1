@@ -114,6 +114,9 @@
           },
           "401": {
             "description": "Unauthorized (Not Logged In)."
+          },
+          "404": {
+            "description": "User not found."
           }
         }
       },
@@ -146,6 +149,9 @@
           },
           "401": {
             "description": "Unauthorized (Not Logged In)."
+          },
+          "404": {
+            "description": "User not found."
           }
         }
       },
@@ -184,6 +190,9 @@
           },
           "401": {
             "description": "Unauthorized (Not Logged In)."
+          },
+          "404": {
+            "description": "User not found."
           }
         }
       },
@@ -209,6 +218,9 @@
           },
           "401": {
             "description": "Unauthorized (Not Logged In)."
+          },
+          "404": {
+            "description": "User not found."
           }
         }
       }
