@@ -1,6 +1,6 @@
 import axios from "axios";
 import qs from "qs";
-import { KEYCLOAK_PORT, REALM_NAME } from "../config";
+import { KEYCLOAK_HOST, KEYCLOAK_PORT, REALM_NAME } from "../config";
 import { APIError } from "../errors/errors";
 import {
   TokenRequestBody,
@@ -10,7 +10,7 @@ import {
   RefreshTokenRequestBody,
 } from "../interfaces/interfaces";
 
-const TOKEN_ENDPOINT = `http://localhost:${KEYCLOAK_PORT}/auth/realms/${REALM_NAME}/protocol/openid-connect/token`;
+const TOKEN_ENDPOINT = `http://${KEYCLOAK_HOST}:${KEYCLOAK_PORT}/auth/realms/${REALM_NAME}/protocol/openid-connect/token`;
 
 export async function getToken(
   body: TokenRequestBody
@@ -23,6 +23,8 @@ export async function getToken(
     });
     return response.data as TokenResponseBody;
   } catch (error: any) {
+    console.log(error);
+
     throw new APIError(
       error?.response.status || 400,
       error?.response.data.error_description ||
@@ -50,7 +52,7 @@ export async function refreshToken(body: RefreshTokenRequestBody) {
   }
 }
 
-const USERS_ENDPOINT = `http://localhost:${KEYCLOAK_PORT}/auth/admin/realms/${REALM_NAME}/users`;
+const USERS_ENDPOINT = `http://${KEYCLOAK_HOST}:${KEYCLOAK_PORT}/auth/admin/realms/${REALM_NAME}/users`;
 
 export async function getAllUsers(accessToken: string): Promise<User[]> {
   try {
@@ -191,7 +193,7 @@ export async function updateUserPassword(
   password: string,
   accessToken: string
 ): Promise<void> {
-  const UPDATE_PASSWORD_ENDPOINT = `http://localhost:${KEYCLOAK_PORT}/auth/admin/realms/${REALM_NAME}/users/${id}/reset-password`;
+  const UPDATE_PASSWORD_ENDPOINT = `http://${KEYCLOAK_HOST}:${KEYCLOAK_PORT}/auth/admin/realms/${REALM_NAME}/users/${id}/reset-password`;
   try {
     await axios.put(
       UPDATE_PASSWORD_ENDPOINT,
