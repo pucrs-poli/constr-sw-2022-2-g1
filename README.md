@@ -2,7 +2,7 @@
 
 Trabalho 1 de Construção de Software.
 
-Grupo: Arthur Ibarra, Felipe Oliveira, Miguel Castro e Willian Albeche
+Grupo: Arthur Ibarra, Felipe Oliveira, Miguel Castro e Willian Albeche.
 
 ## Como Executar
 
