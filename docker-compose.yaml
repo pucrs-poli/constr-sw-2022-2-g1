@@ -4,6 +4,10 @@ networks:
 volumes:
   keycloak-data:
     external: false
+  mongodb-data:
+    external: false
+  # postgresql-data:
+  #   external: true
 services:
   keycloak:
     container_name: keycloak
@@ -17,11 +21,73 @@ services:
       - keycloak-data:/opt/jboss/keycloak/standalone/data
     networks:
       - constr-sw-2022-2
-  backend:
-    container_name: backend
-    build: .
+  keycloak-api:
+    container_name: keycloak-api
+    build: ./keycloak
     ports:
       - 3000:3000
     networks:
       - constr-sw-2022-2
-      
+    depends_on:
+      - keycloak
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=a12345678
+    volumes:
+      - mongodb-data:/data/mongodb
+    networks:
+      - constr-sw-2022-2
+  # postgresql:
+  #   container_name: postgresql
+  #   image: postgres:latest
+  #   ports:
+  #     - 5432:5432
+  #   environment:
+  #     - POSTGRES_HOST_AUTH_METHOD=trust
+  #     - PGDATA=/var/lib/postgresql/data/pgdata
+  #     - POSTGRES_PASSWORD=a12345678
+  #   volumes:
+  #     - postgresql-data:/var/lib/postgresql/data
+  #   networks:
+  #     - constr-sw-2022-2
+  # {api}-api:
+    # container-name: {api}-api
+    # ...
+    # depends_on:
+    #   - keycloak-api
+    #   - mongodb OU postgresql
+  # grupo1
+  # predios-api:
+      # ports:
+      #   - 8081:???
+  # grupo2
+  # recursos-api:
+      # ports:
+      #   - 8082:???
+  # grupo3
+  # reservas-api:
+    # container-name: {api}-api
+    # ...
+      # ports:
+      #   - 8083:???
+    # depends_on:
+    #   - keycloak-api
+    #   - mongodb OU postgresql
+    #   - recursos-api
+  # grupo5
+  # turmas-api:
+      # ports:
+      #   - 8085:???
+  # grupo6
+  # disciplinas-api:
+      # ports:
+      #   - 8086:???
+  # grupo7
+  # aulas-api:
+      # ports:
+      #   - 8087:???
