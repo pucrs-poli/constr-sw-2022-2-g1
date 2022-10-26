@@ -20,7 +20,7 @@ services:
     networks:
       - constr-sw-2022-2
   keycloak_api:
-    container_name: keycloak-api
+    container_name: keycloak_api
     build: ./keycloak
     ports:
       - 3000:3000

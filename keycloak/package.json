@@ -1,7 +1,7 @@
 {
-  "name": "constr-sw-2022-2-g1",
+  "name": "keycloak-api",
   "version": "1.0.0",
-  "description": "Trabalho 1 de CS.",
+  "description": "Keycloak API",
   "main": "build/index.js",
   "scripts": {
     "start": "npx tsc && node build/index.js"
