@@ -40,39 +40,13 @@ services:
       - mongodb-data:/data/mongodb
     networks:
       - constr-sw-2022-2
-  # {api}-api:
-    # container-name: {api}-api
-    # ...
-    # depends_on:
-    #   - keycloak-api
-    #   - mongodb OU postgresql
-  # grupo1
-  # predios-api:
-      # ports:
-      #   - 8081:???
-  # grupo2
-  # recursos-api:
-      # ports:
-      #   - 8082:???
-  # grupo3
-  # reservas-api:
-    # container-name: {api}-api
-    # ...
-      # ports:
-      #   - 8083:???
-    # depends_on:
-    #   - keycloak-api
-    #   - mongodb OU postgresql
-    #   - recursos-api
-  # grupo5
-  # turmas-api:
-      # ports:
-      #   - 8085:???
-  # grupo6
-  # disciplinas-api:
-      # ports:
-      #   - 8086:???
-  # grupo7
-  # aulas-api:
-      # ports:
-      #   - 8087:???
+  buildings_classrooms:
+    container_name: buildings_classrooms
+    build: ./buildings-classrooms
+    ports:
+      - 8081:8081
+    networks:
+      - constr-sw-2022-2
+    depends_on:
+      - keycloak_api
+      - mongodb
