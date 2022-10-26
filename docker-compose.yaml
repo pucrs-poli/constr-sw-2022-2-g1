@@ -6,12 +6,10 @@ volumes:
     external: false
   mongodb-data:
     external: false
-  # postgresql-data:
-  #   external: true
 services:
   keycloak:
     container_name: keycloak
-    image: jboss/keycloak:latest
+    image: jboss/keycloak:16.1.1
     ports:
       - 8080:8080
     environment:
@@ -21,7 +19,7 @@ services:
       - keycloak-data:/opt/jboss/keycloak/standalone/data
     networks:
       - constr-sw-2022-2
-  keycloak-api:
+  keycloak_api:
     container_name: keycloak-api
     build: ./keycloak
     ports:
@@ -30,9 +28,9 @@ services:
       - constr-sw-2022-2
     depends_on:
       - keycloak
-  mongo:
-    container_name: mongo
-    image: mongo:latest
+  mongodb:
+    container_name: mongodb
+    image: mongo:6.0.2
     ports:
       - 27017:27017
     environment:
@@ -42,19 +40,6 @@ services:
       - mongodb-data:/data/mongodb
     networks:
       - constr-sw-2022-2
-  # postgresql:
-  #   container_name: postgresql
-  #   image: postgres:latest
-  #   ports:
-  #     - 5432:5432
-  #   environment:
-  #     - POSTGRES_HOST_AUTH_METHOD=trust
-  #     - PGDATA=/var/lib/postgresql/data/pgdata
-  #     - POSTGRES_PASSWORD=a12345678
-  #   volumes:
-  #     - postgresql-data:/var/lib/postgresql/data
-  #   networks:
-  #     - constr-sw-2022-2
   # {api}-api:
     # container-name: {api}-api
     # ...
