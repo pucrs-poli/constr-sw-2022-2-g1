@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { BUILDING_MODEL_NAME } from "./Building";
 
 export const CLASSROOM_MODEL_NAME = "Classroom";
 
@@ -11,7 +10,7 @@ const classroomSchema = new mongoose.Schema(
     resource: String,
     building: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: BUILDING_MODEL_NAME,
+      ref: "Building", // For some reason, ref does not work with variables in general.
     },
   },
   {

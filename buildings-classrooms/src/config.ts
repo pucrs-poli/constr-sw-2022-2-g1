@@ -9,8 +9,10 @@ export const KEYCLOAK_API_PORT = parseInt(
 /*
     MongoDB configuration.
 */
-export const MONGODB_HOST = process.env.MONGO_DB_HOST || "localhost";
-export const MONGODB_PORT = parseInt(process.env.MONGO_DB_PORT || "27017");
+export const MONGODB_HOST = process.env.MONGODB_HOST || "localhost";
+export const MONGODB_PORT = parseInt(process.env.MONGODB_PORT || "27017");
+export const MONGODB_USER = process.env.MONGODB_USER || "admin";
+export const MONGODB_PASSWORD = process.env.MONGODB_PASSWORD || "a12345678";
 
 /*
     API configuration.

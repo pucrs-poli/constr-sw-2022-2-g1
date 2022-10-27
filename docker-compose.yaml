@@ -56,6 +56,8 @@ services:
       - KEYCLOAK_API_PORT=3000
       - MONGODB_HOST=host.docker.internal
       - MONGODB_PORT=27017
+      - MONGODB_USER=admin
+      - MONGODB_PASSWORD=a12345678
       - API_PORT=8081
     networks:
       - constr-sw-2022-2
