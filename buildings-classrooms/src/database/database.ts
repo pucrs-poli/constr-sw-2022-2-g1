@@ -1,22 +1,27 @@
-import { MongoClient, Db } from "mongodb";
+import mongoose, { Connection } from "mongoose";
 import { MONGODB_HOST, MONGODB_PORT } from "../config";
+import Building from "../models/Building";
+import Classroom from "../models/Classroom";
 
-const url = `mongodb://${MONGODB_HOST}:${MONGODB_PORT}`;
-const databaseName = "buildings-classrooms";
+const DATABASE_NAME = "buildings-classrooms";
 
-const client = new MongoClient(url);
-let database: Db;
+const url = `mongodb://${MONGODB_HOST}:${MONGODB_PORT}/${DATABASE_NAME}`;
 
-export async function connectToMongoDB(): Promise<Db> {
+let connection: Connection;
+
+export async function startDatabase(): Promise<void> {
   try {
-    await client.connect();
-    database = client.db(databaseName);
-    return database;
+    await mongoose.connect(url);
+    await Building.createCollection();
+    console.log("Building collection created.");
+    await Classroom.createCollection();
+    console.log("Classroom collection created.");
+    connection = mongoose.connection;
   } catch (error) {
     throw error;
   }
 }
 
-export function getDatabase(): Db {
-  return database;
+export function getDatabase() {
+  return connection.db;
 }

@@ -4,7 +4,7 @@ import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "./docs/swagger.json";
 import { API_PORT } from "./config";
 import Router from "./routes/router";
-import { connectToMongoDB } from "./database/database";
+import { startDatabase } from "./database/database";
 
 /*
   Create a new express application instance and set middlewares.
@@ -17,7 +17,7 @@ app.use(cors());
   MongoDB connection.
 */
 console.log("Connecting to MongoDB server...\n");
-connectToMongoDB()
+startDatabase()
   .then(() => {
     console.log("[OK] Connected to MongoDB server.\n");
   })
