@@ -16,12 +16,13 @@ app.use(cors());
 /*
   MongoDB connection.
 */
+console.log("Connecting to MongoDB server...\n");
 connectToMongoDB()
   .then(() => {
-    console.log("Connected to MongoDB server.");
+    console.log("[OK] Connected to MongoDB server.\n");
   })
   .catch((error) => {
-    console.log("Error connecting to MongoDB server.", error);
+    console.log("[FAIL] Error connecting to MongoDB server.\n", error);
     process.exit(1);
   });
 
