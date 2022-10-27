@@ -1,1 +1,13 @@
-{}
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Buildings and Classrooms API",
+      "description": "REST API to manage buildings and classrooms."
+    },
+    "host": "localhost:8081",
+    "basePath": "/",
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"]
+}

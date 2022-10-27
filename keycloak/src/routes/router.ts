@@ -9,6 +9,7 @@ enum HTTPMethod {
   PATCH = "PATCH",
   DELETE = "DELETE",
 }
+
 enum Authorization {
   ACCESS_TOKEN = "ACCESS_TOKEN",
   NO_ACCESS_TOKEN = "NO_ACCESS_TOKEN",
