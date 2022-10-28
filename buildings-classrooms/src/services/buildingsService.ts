@@ -1,3 +1,4 @@
+import IBuilding from "../interfaces/IBuilding";
 import Building from "../models/Building";
 
 export async function getAll() {
@@ -6,4 +7,8 @@ export async function getAll() {
 
 export async function getById(id: string) {
   return await Building.findById(id).populate("classrooms");
+}
+
+export async function create(building: IBuilding) {
+  return await Building.create(building);
 }

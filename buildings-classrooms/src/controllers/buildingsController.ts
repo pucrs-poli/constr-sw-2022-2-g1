@@ -1,14 +1,38 @@
 import { Request, Response } from "express";
-import Building from "../models/Building";
+import { APIErrors, sendError } from "../errors/errors";
+import IBuilding from "../interfaces/IBuilding";
+import * as buildingsService from "../services/buildingsService";
 
-export async function getAll(req: Request, res: Response) {
-  res.status(200).json({});
+export async function getAll(_req: Request, res: Response) {
+  try {
+    const buildings = await buildingsService.getAll();
+    res.status(200).send(buildings);
+  } catch (error) {
+    console.error(error);
+    sendError(res, APIErrors.INTERNAL_SERVER_ERROR);
+  }
 }
 
 export async function getById(req: Request, res: Response) {
-  res.status(200).json({});
+  try {
+    const building = await buildingsService.getById(req.params.id);
+    if (building) {
+      res.status(200).send(building);
+    } else {
+      sendError(res, APIErrors.NOT_FOUND);
+    }
+  } catch (error) {
+    console.error(error);
+    sendError(res, APIErrors.INTERNAL_SERVER_ERROR);
+  }
 }
 
 export async function create(req: Request, res: Response) {
-  res.status(200).json({});
+  try {
+    const building = await buildingsService.create(req.body as IBuilding);
+    res.status(201).send(building);
+  } catch (error) {
+    console.error(error);
+    sendError(res, APIErrors.INTERNAL_SERVER_ERROR);
+  }
 }

@@ -16,15 +16,15 @@ app.use(cors());
 /*
   MongoDB connection.
 */
-console.log("Connecting to MongoDB server...\n");
-startDatabase()
-  .then(() => {
+(async () => {
+  try {
+    await startDatabase();
     console.log("[OK] Connected to MongoDB server.\n");
-  })
-  .catch((error) => {
+  } catch (error) {
     console.log("[FAIL] Error connecting to MongoDB server.\n", error);
     process.exit(1);
-  });
+  }
+})();
 
 /*
   Swagger Documentation.
