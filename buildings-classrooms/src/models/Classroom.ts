@@ -2,10 +2,22 @@ import mongoose from "mongoose";
 import IClassroom from "../interfaces/IClassroom";
 
 const classroomSchema = new mongoose.Schema<IClassroom>({
-  number: Number,
-  capacity: Number,
-  floor: Number,
-  resource: String,
+  number: {
+    type: Number,
+    required: true,
+  },
+  capacity: {
+    type: Number,
+    required: true,
+  },
+  floor: {
+    type: Number,
+    required: true,
+  },
+  resource: {
+    type: String,
+    required: true,
+  },
   building: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Building",

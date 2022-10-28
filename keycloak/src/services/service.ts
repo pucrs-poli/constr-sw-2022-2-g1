@@ -7,7 +7,6 @@ import {
   User,
 } from "../interfaces/interfaces";
 import * as keycloak from "../external/keycloak";
-import GlobalToken from "../token/token";
 
 export async function login(
   body: LoginRequestBody
@@ -20,12 +19,6 @@ export async function login(
     grant_type: body.grant_type,
   };
   const tokenInfo = await keycloak.getToken(tokenBody);
-  GlobalToken.update({
-    clientId: body.client_id,
-    accessToken: `Bearer ${tokenInfo.access_token}`,
-    expiresIn: tokenInfo.expires_in,
-    refreshToken: tokenInfo.refresh_token,
-  });
   return {
     token_type: tokenInfo.token_type,
     access_token: tokenInfo.access_token,
@@ -35,38 +28,43 @@ export async function login(
   };
 }
 
-export async function getAllUsers(): Promise<User[]> {
-  const accessToken = GlobalToken.getAccessToken();
+export async function getAllUsers(accessToken: string): Promise<User[]> {
   return await keycloak.getAllUsers(accessToken);
 }
 
-export async function getUserById(id: string): Promise<User> {
-  const accessToken = GlobalToken.getAccessToken();
+export async function getUserById(
+  id: string,
+  accessToken: string
+): Promise<User> {
   return await keycloak.getUserById(id, accessToken);
 }
 
-export async function createUser(user: CreateUserRequestBody): Promise<User> {
-  const accessToken = GlobalToken.getAccessToken();
+export async function createUser(
+  user: CreateUserRequestBody,
+  accessToken: string
+): Promise<User> {
   return await keycloak.createUser(user, accessToken);
 }
 
 export async function updateUser(
   id: string,
-  user: CreateUserRequestBody
+  user: CreateUserRequestBody,
+  accessToken: string
 ): Promise<void> {
-  const accessToken = GlobalToken.getAccessToken();
   await keycloak.updateUser(id, user, accessToken);
 }
 
 export async function updateUserPassword(
   id: string,
-  password: string
+  password: string,
+  accessToken: string
 ): Promise<void> {
-  const accessToken = GlobalToken.getAccessToken();
   await keycloak.updateUserPassword(id, password, accessToken);
 }
 
-export async function deleteUser(id: string): Promise<void> {
-  const accessToken = GlobalToken.getAccessToken();
+export async function deleteUser(
+  id: string,
+  accessToken: string
+): Promise<void> {
   await keycloak.deleteUser(id, accessToken);
 }
