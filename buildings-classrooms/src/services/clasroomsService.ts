@@ -1,5 +1,6 @@
 import IClassroom from "../interfaces/IClassroom";
 import Classroom from "../models/Classroom";
+import * as buildingsService from "./buildingsService";
 
 export async function getAll() {
   return await Classroom.find().populate("building");
@@ -10,5 +11,7 @@ export async function getById(id: string) {
 }
 
 export async function create(classroom: IClassroom) {
-  return await Classroom.create(classroom);
+  const createdClassroom = await Classroom.create(classroom);
+  buildingsService.addClassroom(classroom.building, createdClassroom._id);
+  return createdClassroom;
 }
