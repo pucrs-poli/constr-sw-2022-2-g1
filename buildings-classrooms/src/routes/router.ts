@@ -1,6 +1,7 @@
 import { Express, Request, Response } from "express";
 import { checkAccessToken } from "../middlewares/middlewares";
 import * as buildingsController from "../controllers/buildingsController";
+import * as classroomsController from "../controllers/classroomsController";
 
 enum HTTPMethod {
   GET = "GET",
@@ -74,10 +75,40 @@ export default class Router {
   */
   public setupRoutes(): void {
     this.createRoute(
-      "/login",
+      "/building",
+      HTTPMethod.GET,
+      buildingsController.getAll,
+      Authorization.ACCESS_TOKEN
+    );
+    this.createRoute(
+      "/building/:id",
+      HTTPMethod.GET,
+      buildingsController.getById,
+      Authorization.ACCESS_TOKEN
+    );
+    this.createRoute(
+      "/building",
       HTTPMethod.POST,
-      buildingsController.helloWorld,
-      Authorization.NO_ACCESS_TOKEN
+      buildingsController.create,
+      Authorization.ACCESS_TOKEN
+    );
+    this.createRoute(
+      "/classroom",
+      HTTPMethod.GET,
+      classroomsController.getAll,
+      Authorization.ACCESS_TOKEN
+    );
+    this.createRoute(
+      "/classroom/:id",
+      HTTPMethod.GET,
+      classroomsController.getById,
+      Authorization.ACCESS_TOKEN
+    );
+    this.createRoute(
+      "/classroom",
+      HTTPMethod.POST,
+      classroomsController.create,
+      Authorization.ACCESS_TOKEN
     );
   }
 }
