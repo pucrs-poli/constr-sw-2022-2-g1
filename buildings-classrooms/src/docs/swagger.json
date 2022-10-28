@@ -1,13 +1,322 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "version": "1.0.0",
-      "title": "Buildings and Classrooms API",
-      "description": "REST API to manage buildings and classrooms."
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Buildings and Classrooms API",
+    "description": "REST API to manage buildings and classrooms."
+  },
+  "host": "localhost:8081",
+  "basePath": "/",
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "tags": [
+    {
+      "name": "Buildings",
+      "description": "Fetch/Create/Update buildings."
     },
-    "host": "localhost:8081",
-    "basePath": "/",
-    "schemes": ["http"],
-    "consumes": ["application/json"],
-    "produces": ["application/json"]
+    {
+      "name": "Classrooms",
+      "description": "Fetch/Create/Update classrooms."
+    }
+  ],
+  "paths": {
+    "/building": {
+      "post": {
+        "tags": ["Buildings"],
+        "description": "Endpoint to fetch all buildings.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "description": "An admin access token.",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/AccessToken"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok.",
+            "schema": {
+              "$ref": "#/components/schemas/LoginResponseBody"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error."
+          }
+        }
+      }
+    },
+    "/building/{id}": {
+      "get": {
+        "tags": ["Users"],
+        "description": "Endpoint to fetch a building by ID.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "description": "An admin access token.",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/AccessToken"
+            }
+          },
+          {
+            "name": "id",
+            "description": "A building ID.",
+            "in": "path",
+            "schema": {
+              "$ref": "#/components/schemas/UserID"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok.",
+            "schema": {
+              "$ref": "#/components/schemas/User"
+            }
+          },
+          "401": {
+            "description": "Unauthorized (Not Logged In)."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      },
+      "put": {
+        "tags": ["Users"],
+        "description": "Endpoint to update an user.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "description": "An admin access token.",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/AccessToken"
+            }
+          },
+          {
+            "name": "id",
+            "description": "An user ID.",
+            "in": "path",
+            "schema": {
+              "$ref": "#/components/schemas/UserID"
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/components/schemas/CreateUserRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Ok. No Content."
+          },
+          "400": {
+            "description": "Bad Request."
+          },
+          "401": {
+            "description": "Unauthorized (Not Logged In)."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Users"],
+        "description": "Endpoint to update the password of an user.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "description": "An admin access token.",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/AccessToken"
+            }
+          },
+          {
+            "name": "id",
+            "description": "An user ID.",
+            "in": "path",
+            "schema": {
+              "$ref": "#/components/schemas/UserID"
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "string",
+                  "example": "my-password-123"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Ok. No Content."
+          },
+          "400": {
+            "description": "Bad Request."
+          },
+          "401": {
+            "description": "Unauthorized (Not Logged In)."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "description": "Endpoint to delete an user.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "description": "An admin access token.",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/AccessToken"
+            }
+          },
+          {
+            "name": "id",
+            "description": "An user ID.",
+            "in": "path",
+            "schema": {
+              "$ref": "#/components/schemas/UserID"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Ok. No Content."
+          },
+          "400": {
+            "description": "Bad Request."
+          },
+          "401": {
+            "description": "Unauthorized (Not Logged In)."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AccessToken": {
+        "type": "string",
+        "example": "Bearer <YOUR_TOKEN>"
+      },
+      "UserID": {
+        "type": "string",
+        "example": "5e2052a2-1030-440a-a623-9095613d5c73"
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "sub": {
+            "type": "string",
+            "example": "36c924ba-7397-4253-a5b6-72a65bf707ae"
+          },
+          "preferred_username": {
+            "type": "string",
+            "example": "EduardoArruda700"
+          },
+          "given_name": {
+            "type": "string",
+            "example": "Eduardo"
+          },
+          "family_name": {
+            "type": "string",
+            "example": "Arruda"
+          },
+          "email": {
+            "type": "string",
+            "example": "arruda-professor@pucrs.br"
+          }
+        }
+      },
+      "LoginRequestBody": {
+        "type": "object",
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "example": "grupo1"
+          },
+          "username": {
+            "type": "string",
+            "example": "admin"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345"
+          },
+          "grant_type": {
+            "type": "string",
+            "example": "password"
+          }
+        }
+      },
+      "LoginResponseBody": {
+        "type": "object",
+        "properties": {
+          "token_type": {
+            "type": "string",
+            "example": "Bearer"
+          },
+          "access_token": {
+            "type": "string",
+            "example": "eyJhbGciOiJSUzI..."
+          },
+          "expires_in": {
+            "type": "number",
+            "example": 300
+          },
+          "refresh_token": {
+            "type": "string",
+            "example": "ey5TbGciOiJSUzK..."
+          },
+          "refresh_expires_in": {
+            "type": "number",
+            "example": 1800
+          }
+        }
+      },
+      "CreateUserRequestBody": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "example": "George"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Tyson"
+          },
+          "email": {
+            "type": "string",
+            "example": "george.tyson@gmail.com"
+          },
+          "username": {
+            "type": "string",
+            "example": "TysonGeorge125"
+          }
+        }
+      }
+    }
+  }
 }
