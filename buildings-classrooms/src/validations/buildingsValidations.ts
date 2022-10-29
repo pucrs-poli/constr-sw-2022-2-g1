@@ -1,7 +1,8 @@
 import Joi from "joi";
 
 export default class BuildingsValidations {
-  public static createOrUpdateBuilding = Joi.object({
+  public static GetById = Joi.string().hex().length(24).required();
+  public static CreateOrUpdate = Joi.object({
     name: Joi.string().required(),
     number: Joi.alternatives().try(Joi.string(), Joi.number()).required(),
     address: Joi.object({
@@ -15,7 +16,7 @@ export default class BuildingsValidations {
     }).required(),
     classrooms: Joi.array().items(Joi.string()),
   });
-  public static SearchOrPatchBuilding = Joi.object({
+  public static SearchOrPatch = Joi.object({
     name: Joi.string(),
     number: Joi.alternatives().try(Joi.string(), Joi.number()),
     address: Joi.object({

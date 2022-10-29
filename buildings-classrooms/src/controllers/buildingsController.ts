@@ -4,9 +4,7 @@ import * as buildingsService from "../services/buildingsService";
 import BuildingsValidations from "../validations/buildingsValidations";
 
 export async function getAll(req: Request, res: Response) {
-  const validation = BuildingsValidations.SearchOrPatchBuilding.validate(
-    req.query
-  );
+  const validation = BuildingsValidations.SearchOrPatch.validate(req.query);
   if (validation.error) {
     sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
     return;
@@ -21,6 +19,11 @@ export async function getAll(req: Request, res: Response) {
 }
 
 export async function getById(req: Request, res: Response) {
+  const validation = BuildingsValidations.GetById.validate(req.params.id);
+  if (validation.error) {
+    sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
+    return;
+  }
   try {
     const building = await buildingsService.getById(req.params.id);
     if (building) {
@@ -35,9 +38,7 @@ export async function getById(req: Request, res: Response) {
 }
 
 export async function create(req: Request, res: Response) {
-  const validation = BuildingsValidations.createOrUpdateBuilding.validate(
-    req.body
-  );
+  const validation = BuildingsValidations.CreateOrUpdate.validate(req.body);
   if (validation.error) {
     sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
     return;
@@ -52,9 +53,12 @@ export async function create(req: Request, res: Response) {
 }
 
 export async function updateById(req: Request, res: Response) {
-  const validation = BuildingsValidations.createOrUpdateBuilding.validate(
-    req.body
-  );
+  let validation = BuildingsValidations.GetById.validate(req.params.id);
+  if (validation.error) {
+    sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
+    return;
+  }
+  validation = BuildingsValidations.CreateOrUpdate.validate(req.body);
   if (validation.error) {
     sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
     return;
@@ -73,9 +77,12 @@ export async function updateById(req: Request, res: Response) {
 }
 
 export async function patchById(req: Request, res: Response) {
-  const validation = BuildingsValidations.SearchOrPatchBuilding.validate(
-    req.body
-  );
+  let validation = BuildingsValidations.GetById.validate(req.params.id);
+  if (validation.error) {
+    sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
+    return;
+  }
+  validation = BuildingsValidations.SearchOrPatch.validate(req.body);
   if (validation.error) {
     sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
     return;
@@ -94,6 +101,11 @@ export async function patchById(req: Request, res: Response) {
 }
 
 export async function deleteById(req: Request, res: Response) {
+  const validation = BuildingsValidations.GetById.validate(req.params.id);
+  if (validation.error) {
+    sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
+    return;
+  }
   try {
     const building = await buildingsService.deleteById(req.params.id);
     if (building) {

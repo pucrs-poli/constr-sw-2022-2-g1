@@ -5,9 +5,7 @@ import * as classroomsService from "../services/clasroomsService";
 import ClassroomsValidations from "../validations/classroomsValidations";
 
 export async function getAll(req: Request, res: Response) {
-  const validation = ClassroomsValidations.SearchOrPatchClassroom.validate(
-    req.query
-  );
+  const validation = ClassroomsValidations.SearchOrPatch.validate(req.query);
   if (validation.error) {
     sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
     return;
@@ -22,6 +20,11 @@ export async function getAll(req: Request, res: Response) {
 }
 
 export async function getById(req: Request, res: Response) {
+  const validation = ClassroomsValidations.GetById.validate(req.params.id);
+  if (validation.error) {
+    sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
+    return;
+  }
   try {
     const classroom = await classroomsService.getById(req.params.id);
     if (classroom) {
@@ -36,9 +39,7 @@ export async function getById(req: Request, res: Response) {
 }
 
 export async function create(req: Request, res: Response) {
-  const validation = ClassroomsValidations.createOrUpdateClassroom.validate(
-    req.body
-  );
+  const validation = ClassroomsValidations.CreateOrUpdate.validate(req.body);
   if (validation.error) {
     sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
     return;
@@ -53,9 +54,12 @@ export async function create(req: Request, res: Response) {
 }
 
 export async function updateById(req: Request, res: Response) {
-  const validation = ClassroomsValidations.createOrUpdateClassroom.validate(
-    req.body
-  );
+  let validation = ClassroomsValidations.GetById.validate(req.params.id);
+  if (validation.error) {
+    sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
+    return;
+  }
+  validation = ClassroomsValidations.CreateOrUpdate.validate(req.body);
   if (validation.error) {
     sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
     return;
@@ -77,9 +81,12 @@ export async function updateById(req: Request, res: Response) {
 }
 
 export async function patchById(req: Request, res: Response) {
-  const validation = ClassroomsValidations.SearchOrPatchClassroom.validate(
-    req.body
-  );
+  let validation = ClassroomsValidations.GetById.validate(req.params.id);
+  if (validation.error) {
+    sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
+    return;
+  }
+  validation = ClassroomsValidations.SearchOrPatch.validate(req.body);
   if (validation.error) {
     sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
     return;
@@ -101,6 +108,11 @@ export async function patchById(req: Request, res: Response) {
 }
 
 export async function deleteById(req: Request, res: Response) {
+  const validation = ClassroomsValidations.GetById.validate(req.params.id);
+  if (validation.error) {
+    sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
+    return;
+  }
   try {
     const classroom = await classroomsService.deleteById(req.params.id);
     if (classroom) {
