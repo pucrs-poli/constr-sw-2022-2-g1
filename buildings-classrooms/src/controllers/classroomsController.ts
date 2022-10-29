@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { APIErrors, sendError } from "../errors/errors";
-import IClassroom from "../interfaces/IClassroom";
 import * as classroomsService from "../services/clasroomsService";
 import ClassroomsValidations from "../validations/classroomsValidations";
 
@@ -45,7 +44,7 @@ export async function create(req: Request, res: Response) {
     return;
   }
   try {
-    const classroom = await classroomsService.create(req.body as IClassroom);
+    const classroom = await classroomsService.create(req.body);
     res.status(201).send(classroom);
   } catch (error) {
     console.error(error);
@@ -67,7 +66,7 @@ export async function updateById(req: Request, res: Response) {
   try {
     const classroom = await classroomsService.updateById(
       req.params.id,
-      req.body as IClassroom
+      req.body
     );
     if (classroom) {
       res.status(200).send(classroom);
@@ -94,7 +93,7 @@ export async function patchById(req: Request, res: Response) {
   try {
     const classroom = await classroomsService.updateById(
       req.params.id,
-      req.body as IClassroom
+      req.body
     );
     if (classroom) {
       res.status(200).send(classroom);
