@@ -100,6 +100,12 @@ export default class Router {
     );
     this.createRoute(
       "/building/:id",
+      HTTPMethod.PATCH,
+      buildingsController.patchById,
+      Authorization.ACCESS_TOKEN
+    );
+    this.createRoute(
+      "/building/:id",
       HTTPMethod.DELETE,
       buildingsController.deleteById,
       Authorization.ACCESS_TOKEN
@@ -126,6 +132,12 @@ export default class Router {
       "/classroom/:id",
       HTTPMethod.PUT,
       classroomsController.updateById,
+      Authorization.ACCESS_TOKEN
+    );
+    this.createRoute(
+      "/classroom/:id",
+      HTTPMethod.PATCH,
+      classroomsController.patchById,
       Authorization.ACCESS_TOKEN
     );
     this.createRoute(
