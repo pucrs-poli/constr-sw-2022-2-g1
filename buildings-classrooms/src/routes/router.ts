@@ -93,6 +93,18 @@ export default class Router {
       Authorization.ACCESS_TOKEN
     );
     this.createRoute(
+      "/building/:id",
+      HTTPMethod.PUT,
+      buildingsController.updateById,
+      Authorization.ACCESS_TOKEN
+    );
+    this.createRoute(
+      "/building/:id",
+      HTTPMethod.DELETE,
+      buildingsController.deleteById,
+      Authorization.ACCESS_TOKEN
+    );
+    this.createRoute(
       "/classroom",
       HTTPMethod.GET,
       classroomsController.getAll,
@@ -108,6 +120,18 @@ export default class Router {
       "/classroom",
       HTTPMethod.POST,
       classroomsController.create,
+      Authorization.ACCESS_TOKEN
+    );
+    this.createRoute(
+      "/classroom/:id",
+      HTTPMethod.PUT,
+      classroomsController.updateById,
+      Authorization.ACCESS_TOKEN
+    );
+    this.createRoute(
+      "/classroom/:id",
+      HTTPMethod.DELETE,
+      classroomsController.deleteById,
       Authorization.ACCESS_TOKEN
     );
   }

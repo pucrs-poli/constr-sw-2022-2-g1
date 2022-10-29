@@ -2,8 +2,12 @@ import { Types } from "mongoose";
 import IBuilding from "../interfaces/IBuilding";
 import Building from "../models/Building";
 
-export async function getAll() {
-  return await Building.find().populate("classrooms");
+export async function getAll(attributes: object) {
+  if (attributes) {
+    return Building.find(attributes).populate("classrooms");
+  } else {
+    return Building.find().populate("classrooms");
+  }
 }
 
 export async function getById(id: string) {
@@ -25,4 +29,12 @@ export async function addClassroom(
   } else {
     throw new Error("Building not found.");
   }
+}
+
+export async function updateById(id: string, building: IBuilding) {
+  return await Building.findByIdAndUpdate(id, building);
+}
+
+export async function deleteById(id: string) {
+  return await Building.findByIdAndDelete(id);
 }
