@@ -9,6 +9,7 @@ export async function getAll(req: Request, res: Response) {
   );
   if (validation.error) {
     sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
+    return;
   }
   try {
     const buildings = await buildingsService.getAll(req.query);
@@ -39,6 +40,7 @@ export async function create(req: Request, res: Response) {
   );
   if (validation.error) {
     sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
+    return;
   }
   try {
     const building = await buildingsService.create(req.body);
@@ -55,6 +57,7 @@ export async function updateById(req: Request, res: Response) {
   );
   if (validation.error) {
     sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
+    return;
   }
   try {
     const building = await buildingsService.updateById(req.params.id, req.body);
@@ -75,6 +78,7 @@ export async function patchById(req: Request, res: Response) {
   );
   if (validation.error) {
     sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
+    return;
   }
   try {
     const building = await buildingsService.updateById(req.params.id, req.body);

@@ -10,6 +10,7 @@ export async function getAll(req: Request, res: Response) {
   );
   if (validation.error) {
     sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
+    return;
   }
   try {
     const classrooms = await classroomsService.getAll(req.query);
@@ -40,6 +41,7 @@ export async function create(req: Request, res: Response) {
   );
   if (validation.error) {
     sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
+    return;
   }
   try {
     const classroom = await classroomsService.create(req.body as IClassroom);
@@ -56,6 +58,7 @@ export async function updateById(req: Request, res: Response) {
   );
   if (validation.error) {
     sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
+    return;
   }
   try {
     const classroom = await classroomsService.updateById(
@@ -79,6 +82,7 @@ export async function patchById(req: Request, res: Response) {
   );
   if (validation.error) {
     sendError(res, APIErrors.INPUT_VALIDATION_ERROR, validation.error.message);
+    return;
   }
   try {
     const classroom = await classroomsService.updateById(
