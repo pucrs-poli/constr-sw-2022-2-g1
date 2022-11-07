@@ -52,6 +52,27 @@ export async function refreshToken(body: RefreshTokenRequestBody) {
   }
 }
 
+export async function getUserByAccessToken(accessToken: string): Promise<User> {
+  try {
+    const response = await axios.get(
+      `http://${KEYCLOAK_HOST}:${KEYCLOAK_PORT}/auth/realms/${REALM_NAME}/protocol/openid-connect/userinfo`,
+      {
+        headers: {
+          Authorization: accessToken,
+        },
+      }
+    );
+    return response.data as User;
+  } catch (error: any) {
+    throw new APIError(
+      error?.response.status || 400,
+      error?.response.data.error_description ||
+        error?.response.data.error ||
+        "Invalid token."
+    );
+  }
+}
+
 const USERS_ENDPOINT = `http://${KEYCLOAK_HOST}:${KEYCLOAK_PORT}/auth/admin/realms/${REALM_NAME}/users`;
 
 export async function getAllUsers(accessToken: string): Promise<User[]> {

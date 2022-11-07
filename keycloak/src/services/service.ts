@@ -4,6 +4,7 @@ import {
   LoginRequestBody,
   LoginResponseBody,
   TokenRequestBody,
+  RefreshTokenRequestBody,
   User,
 } from "../interfaces/interfaces";
 import * as keycloak from "../external/keycloak";
@@ -28,6 +29,19 @@ export async function login(
   };
 }
 
+export async function refreshToken(
+  body: RefreshTokenRequestBody
+): Promise<LoginResponseBody> {
+  const tokenInfo = await keycloak.refreshToken(body);
+  return {
+    token_type: tokenInfo.token_type,
+    access_token: tokenInfo.access_token,
+    expires_in: tokenInfo.expires_in,
+    refresh_token: tokenInfo.refresh_token,
+    refresh_expires_in: tokenInfo.refresh_expires_in,
+  };
+}
+
 export async function getAllUsers(accessToken: string): Promise<User[]> {
   return await keycloak.getAllUsers(accessToken);
 }
@@ -37,6 +51,10 @@ export async function getUserById(
   accessToken: string
 ): Promise<User> {
   return await keycloak.getUserById(id, accessToken);
+}
+
+export async function getUserByAccessToken(accessToken: string): Promise<User> {
+  return await keycloak.getUserByAccessToken(accessToken);
 }
 
 export async function createUser(

@@ -80,6 +80,12 @@ export default class Router {
       Authorization.NO_ACCESS_TOKEN
     );
     this.createRoute(
+      "/token/refresh",
+      HTTPMethod.POST,
+      controller.refreshToken,
+      Authorization.NO_ACCESS_TOKEN
+    );
+    this.createRoute(
       "/users",
       HTTPMethod.GET,
       controller.getAllUsers,
@@ -114,6 +120,12 @@ export default class Router {
       HTTPMethod.DELETE,
       controller.deleteUser,
       Authorization.ACCESS_TOKEN
+    );
+    this.createRoute(
+      "/users/validate",
+      HTTPMethod.GET,
+      controller.getUserByAccessToken,
+      Authorization.NO_ACCESS_TOKEN
     );
   }
 }

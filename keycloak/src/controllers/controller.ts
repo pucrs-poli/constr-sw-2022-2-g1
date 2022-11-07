@@ -3,6 +3,7 @@ import { APIError, handleError } from "../errors/errors";
 import {
   CreateUserRequestBody,
   LoginRequestBody,
+  RefreshTokenRequestBody,
 } from "../interfaces/interfaces";
 import * as service from "../services/service";
 
@@ -10,6 +11,16 @@ export async function login(req: Request, res: Response): Promise<void> {
   const body = req.body as LoginRequestBody;
   try {
     const loginInfo = await service.login(body);
+    res.status(200).json(loginInfo);
+  } catch (error) {
+    handleError(res, error as APIError);
+  }
+}
+
+export async function refreshToken(req: Request, res: Response): Promise<void> {
+  const body = req.body as RefreshTokenRequestBody;
+  try {
+    const loginInfo = await service.refreshToken(body);
     res.status(200).json(loginInfo);
   } catch (error) {
     handleError(res, error as APIError);
@@ -31,6 +42,19 @@ export async function getUserById(req: Request, res: Response): Promise<void> {
   const id = req.params.id;
   try {
     const user = await service.getUserById(id, accessToken);
+    res.status(200).json(user);
+  } catch (error) {
+    handleError(res, error as APIError);
+  }
+}
+
+export async function getUserByAccessToken(
+  req: Request,
+  res: Response
+): Promise<void> {
+  const accessToken = req.headers.authorization as string;
+  try {
+    const user = await service.getUserByAccessToken(accessToken);
     res.status(200).json(user);
   } catch (error) {
     handleError(res, error as APIError);
