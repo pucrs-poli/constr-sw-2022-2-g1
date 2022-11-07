@@ -22,6 +22,7 @@ export async function checkAccessToken(
     });
     next();
   } catch (error) {
+    console.error(error);
     sendError(res, APIErrors.INVALID_OR_MISSING_ACCESS_TOKEN);
   }
 }

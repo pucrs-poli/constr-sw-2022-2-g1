@@ -27,14 +27,6 @@
         "description": "Endpoint to login as an administrator.",
         "parameters": [
           {
-            "name": "Authorization",
-            "description": "An admin access token.",
-            "in": "header",
-            "schema": {
-              "$ref": "#/components/schemas/AccessToken"
-            }
-          },
-          {
             "name": "body",
             "in": "body",
             "schema": {

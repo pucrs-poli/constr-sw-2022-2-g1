@@ -8,7 +8,7 @@ type APIError = {
 export class APIErrors {
   public static INVALID_OR_MISSING_ACCESS_TOKEN: APIError = {
     status: 401,
-    message: "Invalid or missing access token.",
+    message: "Invalid or missing access token",
   };
   public static NOT_FOUND: APIError = {
     status: 404,
