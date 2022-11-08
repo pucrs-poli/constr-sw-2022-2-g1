@@ -3,6 +3,8 @@ import { NextFunction, Request, Response } from "express";
 import { KEYCLOAK_API_HOST, KEYCLOAK_API_PORT } from "../config";
 import { APIErrors, sendError } from "../errors/errors";
 
+const KEYCLOAK_INTEGRATION = false;
+
 const VALIDATE_USER_ENDPOINT = `http://${KEYCLOAK_API_HOST}:${KEYCLOAK_API_PORT}/users/validate`;
 
 export async function checkAccessToken(
@@ -10,6 +12,10 @@ export async function checkAccessToken(
   res: Response,
   next: NextFunction
 ) {
+  if (!KEYCLOAK_INTEGRATION) {
+    next();
+    return;
+  }
   const accessToken = req.headers.authorization as string;
   if (!accessToken || !accessToken.startsWith("Bearer ")) {
     sendError(res, APIErrors.INVALID_OR_MISSING_ACCESS_TOKEN);
