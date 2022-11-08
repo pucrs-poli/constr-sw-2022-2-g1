@@ -51,7 +51,7 @@
             "description": "Unauthorized (Not Logged In)."
           },
           "404": {
-            "description": "User not found."
+            "description": "Building not found."
           }
         }
       },
@@ -125,7 +125,7 @@
             "description": "Unauthorized (Not Logged In)."
           },
           "404": {
-            "description": "User not found."
+            "description": "Buildings not found."
           }
         }
       },
@@ -145,7 +145,7 @@
           },
           {
             "name": "id",
-            "description": "An user ID.",
+            "description": "An buildings ID.",
             "in": "path",
             "schema": {
               "$ref": "#/components/schemas/MongoID"
@@ -173,7 +173,7 @@
             "description": "Unauthorized (Not Logged In)."
           },
           "404": {
-            "description": "User not found."
+            "description": "Buildings not found."
           }
         }
       },
@@ -193,7 +193,7 @@
           },
           {
             "name": "id",
-            "description": "An user ID.",
+            "description": "An buildings ID.",
             "in": "path",
             "schema": {
               "$ref": "#/components/schemas/MongoID"
@@ -227,7 +227,7 @@
             "description": "Unauthorized (Not Logged In)."
           },
           "404": {
-            "description": "User not found."
+            "description": "Buildings not found."
           }
         }
       },
@@ -247,7 +247,7 @@
           },
           {
             "name": "id",
-            "description": "An user ID.",
+            "description": "An buildings ID.",
             "in": "path",
             "schema": {
               "$ref": "#/components/schemas/MongoID"
@@ -268,7 +268,7 @@
             "description": "Unauthorized (Not Logged In)."
           },
           "404": {
-            "description": "User not found."
+            "description": "Buildings not found."
           }
         }
       }
@@ -297,7 +297,7 @@
             "description": "Unauthorized (Not Logged In)."
           },
           "404": {
-            "description": "User not found."
+            "description": "Classroom not found."
           }
         }
       },
@@ -353,7 +353,7 @@
           },
           {
             "name": "id",
-            "description": "A building ID.",
+            "description": "A classroom ID.",
             "in": "path",
             "schema": {
               "$ref": "#/components/schemas/MongoID"
@@ -371,7 +371,7 @@
             "description": "Unauthorized (Not Logged In)."
           },
           "404": {
-            "description": "User not found."
+            "description": "Classroom not found."
           }
         }
       },
@@ -391,7 +391,7 @@
           },
           {
             "name": "id",
-            "description": "An user ID.",
+            "description": "An classroom ID.",
             "in": "path",
             "schema": {
               "$ref": "#/components/schemas/MongoID"
@@ -419,7 +419,7 @@
             "description": "Unauthorized (Not Logged In)."
           },
           "404": {
-            "description": "User not found."
+            "description": "Classroom not found."
           }
         }
       },
@@ -439,7 +439,7 @@
           },
           {
             "name": "id",
-            "description": "An user ID.",
+            "description": "An classroom ID.",
             "in": "path",
             "schema": {
               "$ref": "#/components/schemas/MongoID"
@@ -473,7 +473,7 @@
             "description": "Unauthorized (Not Logged In)."
           },
           "404": {
-            "description": "User not found."
+            "description": "Classroom not found."
           }
         }
       },
@@ -493,7 +493,7 @@
           },
           {
             "name": "id",
-            "description": "An user ID.",
+            "description": "An classroom ID.",
             "in": "path",
             "schema": {
               "$ref": "#/components/schemas/MongoID"
@@ -514,7 +514,7 @@
             "description": "Unauthorized (Not Logged In)."
           },
           "404": {
-            "description": "User not found."
+            "description": "Classroom not found."
           }
         }
       }
@@ -665,10 +665,6 @@
                 "example": "90619-900"
               }
             }
-          },
-          "classrooms": {
-            "type": "string",
-            "example": "Array<Types.ObjectId>"
           }
         }
       },
@@ -722,7 +718,11 @@
           },
           "classrooms": {
             "type": "string",
-            "example": "Array<Types.ObjectId>"
+            "example": "[]"
+          },
+          "__v": {
+            "type": "string",
+            "example": "87dy3t76dgt736"
           }
         }
       },
@@ -776,7 +776,11 @@
           },
           "building": {
             "type": "string",
-            "example": "Types.ObjectId"
+            "example": "87dy3t76dgt736"
+          },
+          "__v": {
+            "type": "string",
+            "example": "87dy3t76dgt736"
           }
         }
       }
