@@ -7,9 +7,15 @@
   },
   "host": "localhost:8081",
   "basePath": "/",
-  "schemes": ["http"],
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "tags": [
     {
       "name": "Buildings",
@@ -22,8 +28,10 @@
   ],
   "paths": {
     "/building": {
-      "post": {
-        "tags": ["Buildings"],
+      "get": {
+        "tags": [
+          "Buildings"
+        ],
         "description": "Endpoint to fetch all buildings.",
         "parameters": [
           {
@@ -37,9 +45,43 @@
         ],
         "responses": {
           "200": {
+            "description": "Ok."
+          },
+          "401": {
+            "description": "Unauthorized (Not Logged In)."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Buildings"
+        ],
+        "description": "Endpoint to create a buildings.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "description": "An admin access token.",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/AccessToken"
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/components/schemas/BuildingRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
             "description": "Ok.",
             "schema": {
-              "$ref": "#/components/schemas/LoginResponseBody"
+              "$ref": "#/components/schemas/BuildingResponseBody"
             }
           },
           "500": {
@@ -50,7 +92,9 @@
     },
     "/building/{id}": {
       "get": {
-        "tags": ["Users"],
+        "tags": [
+          "Buildings"
+        ],
         "description": "Endpoint to fetch a building by ID.",
         "parameters": [
           {
@@ -66,7 +110,7 @@
             "description": "A building ID.",
             "in": "path",
             "schema": {
-              "$ref": "#/components/schemas/UserID"
+              "$ref": "#/components/schemas/MongoID"
             }
           }
         ],
@@ -74,7 +118,7 @@
           "200": {
             "description": "Ok.",
             "schema": {
-              "$ref": "#/components/schemas/User"
+              "$ref": "#/components/schemas/BuildingResponseBody"
             }
           },
           "401": {
@@ -86,8 +130,10 @@
         }
       },
       "put": {
-        "tags": ["Users"],
-        "description": "Endpoint to update an user.",
+        "tags": [
+          "Buildings"
+        ],
+        "description": "Endpoint to update an building.",
         "parameters": [
           {
             "name": "Authorization",
@@ -102,20 +148,23 @@
             "description": "An user ID.",
             "in": "path",
             "schema": {
-              "$ref": "#/components/schemas/UserID"
+              "$ref": "#/components/schemas/MongoID"
             }
           },
           {
             "name": "body",
             "in": "body",
             "schema": {
-              "$ref": "#/components/schemas/CreateUserRequestBody"
+              "$ref": "#/components/schemas/BuildingRequestBody"
             }
           }
         ],
         "responses": {
           "204": {
-            "description": "Ok. No Content."
+            "description": "Ok. No Content.",
+            "schema": {
+              "$ref": "#/components/schemas/BuildingResponseBody"
+            }
           },
           "400": {
             "description": "Bad Request."
@@ -129,8 +178,10 @@
         }
       },
       "patch": {
-        "tags": ["Users"],
-        "description": "Endpoint to update the password of an user.",
+        "tags": [
+          "Buildings"
+        ],
+        "description": "Endpoint to update any attribute of an building.",
         "parameters": [
           {
             "name": "Authorization",
@@ -145,7 +196,7 @@
             "description": "An user ID.",
             "in": "path",
             "schema": {
-              "$ref": "#/components/schemas/UserID"
+              "$ref": "#/components/schemas/MongoID"
             }
           },
           {
@@ -154,9 +205,9 @@
             "schema": {
               "type": "object",
               "properties": {
-                "password": {
-                  "type": "string",
-                  "example": "my-password-123"
+                "attribute": {
+                  "type": "?",
+                  "example": "attribute value"
                 }
               }
             }
@@ -164,7 +215,10 @@
         ],
         "responses": {
           "204": {
-            "description": "Ok. No Content."
+            "description": "Ok. No Content.",
+            "schema": {
+              "$ref": "#/components/schemas/BuildingResponseBody"
+            }
           },
           "400": {
             "description": "Bad Request."
@@ -178,8 +232,10 @@
         }
       },
       "delete": {
-        "tags": ["Users"],
-        "description": "Endpoint to delete an user.",
+        "tags": [
+          "Buildings"
+        ],
+        "description": "Endpoint to delete an building.",
         "parameters": [
           {
             "name": "Authorization",
@@ -194,13 +250,262 @@
             "description": "An user ID.",
             "in": "path",
             "schema": {
-              "$ref": "#/components/schemas/UserID"
+              "$ref": "#/components/schemas/MongoID"
             }
           }
         ],
         "responses": {
           "204": {
-            "description": "Ok. No Content."
+            "description": "Ok. No Content.",
+            "schema": {
+              "$ref": "#/components/schemas/BuildingResponseBody"
+            }
+          },
+          "400": {
+            "description": "Bad Request."
+          },
+          "401": {
+            "description": "Unauthorized (Not Logged In)."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      }
+    },
+    "/classroom": {
+      "get": {
+        "tags": [
+          "Classrooms"
+        ],
+        "description": "Endpoint to fetch all classrooms.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "description": "An admin access token.",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/AccessToken"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok."
+          },
+          "401": {
+            "description": "Unauthorized (Not Logged In)."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Classrooms"
+        ],
+        "description": "Endpoint to create a classroom.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "description": "An admin access token.",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/AccessToken"
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/components/schemas/ClassroomRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok.",
+            "schema": {
+              "$ref": "#/components/schemas/ClassroomResponseBody"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error."
+          }
+        }
+      }
+    },
+    "/classroom/{id}": {
+      "get": {
+        "tags": [
+          "Classrooms"
+        ],
+        "description": "Endpoint to fetch a classroom by ID.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "description": "An admin access token.",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/AccessToken"
+            }
+          },
+          {
+            "name": "id",
+            "description": "A building ID.",
+            "in": "path",
+            "schema": {
+              "$ref": "#/components/schemas/MongoID"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok.",
+            "schema": {
+              "$ref": "#/components/schemas/ClassroomResponseBody"
+            }
+          },
+          "401": {
+            "description": "Unauthorized (Not Logged In)."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Classrooms"
+        ],
+        "description": "Endpoint to update an classroom.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "description": "An admin access token.",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/AccessToken"
+            }
+          },
+          {
+            "name": "id",
+            "description": "An user ID.",
+            "in": "path",
+            "schema": {
+              "$ref": "#/components/schemas/MongoID"
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/components/schemas/ClassroomRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Ok. No Content.",
+            "schema": {
+              "$ref": "#/components/schemas/ClassroomResponseBody"
+            }
+          },
+          "400": {
+            "description": "Bad Request."
+          },
+          "401": {
+            "description": "Unauthorized (Not Logged In)."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Classrooms"
+        ],
+        "description": "Endpoint to update any attribute of an classroom.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "description": "An admin access token.",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/AccessToken"
+            }
+          },
+          {
+            "name": "id",
+            "description": "An user ID.",
+            "in": "path",
+            "schema": {
+              "$ref": "#/components/schemas/MongoID"
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "attribute": {
+                  "type": "?",
+                  "example": "attribute value"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Ok. No Content.",
+            "schema": {
+              "$ref": "#/components/schemas/ClassroomResponseBody"
+            }
+          },
+          "400": {
+            "description": "Bad Request."
+          },
+          "401": {
+            "description": "Unauthorized (Not Logged In)."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Classrooms"
+        ],
+        "description": "Endpoint to delete an classroom.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "description": "An admin access token.",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/AccessToken"
+            }
+          },
+          {
+            "name": "id",
+            "description": "An user ID.",
+            "in": "path",
+            "schema": {
+              "$ref": "#/components/schemas/MongoID"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Ok. No Content.",
+            "schema": {
+              "$ref": "#/components/schemas/ClassroomResponseBody"
+            }
           },
           "400": {
             "description": "Bad Request."
@@ -221,9 +526,9 @@
         "type": "string",
         "example": "Bearer <YOUR_TOKEN>"
       },
-      "UserID": {
+      "MongoID": {
         "type": "string",
-        "example": "5e2052a2-1030-440a-a623-9095613d5c73"
+        "example": "5e2052a21030440aa6239095613d5c73"
       },
       "User": {
         "type": "object",
@@ -314,6 +619,164 @@
           "username": {
             "type": "string",
             "example": "TysonGeorge125"
+          }
+        }
+      },
+      "BuildingRequestBody": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Prédio 32"
+          },
+          "number": {
+            "type": "number",
+            "example": 32
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "street": {
+                "type": "string",
+                "example": "Av. Ipiranga"
+              },
+              "number": {
+                "type": "number",
+                "example": 6681
+              },
+              "complement": {
+                "type": "string",
+                "example": "Prédio 32"
+              },
+              "neighborhood": {
+                "type": "string",
+                "example": "Partenon"
+              },
+              "city": {
+                "type": "string",
+                "example": "Porto Alegre"
+              },
+              "state": {
+                "type": "string",
+                "example": "RS"
+              },
+              "zipCode": {
+                "type": "string",
+                "example": "90619-900"
+              }
+            }
+          },
+          "classrooms": {
+            "type": "string",
+            "example": "Array<Types.ObjectId>"
+          }
+        }
+      },
+      "BuildingResponseBody": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "87dy3t76dgt736"
+          },
+          "name": {
+            "type": "string",
+            "example": "Prédio 32"
+          },
+          "number": {
+            "type": "number",
+            "example": 32
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "street": {
+                "type": "string",
+                "example": "Av. Ipiranga"
+              },
+              "number": {
+                "type": "number",
+                "example": 6681
+              },
+              "complement": {
+                "type": "string",
+                "example": "Prédio 32"
+              },
+              "neighborhood": {
+                "type": "string",
+                "example": "Partenon"
+              },
+              "city": {
+                "type": "string",
+                "example": "Porto Alegre"
+              },
+              "state": {
+                "type": "string",
+                "example": "RS"
+              },
+              "zipCode": {
+                "type": "string",
+                "example": "90619-900"
+              }
+            }
+          },
+          "classrooms": {
+            "type": "string",
+            "example": "Array<Types.ObjectId>"
+          }
+        }
+      },
+      "ClassroomRequestBody": {
+        "type": "object",
+        "properties": {
+          "number": {
+            "type": "number",
+            "example": 203
+          },
+          "capacity": {
+            "type": "number",
+            "example": 60
+          },
+          "floor": {
+            "type": "number",
+            "example": 2
+          },
+          "resource": {
+            "type": "string",
+            "example": "projetor"
+          },
+          "building": {
+            "type": "string",
+            "example": "Types.ObjectId"
+          }
+        }
+      },
+      "ClassroomResponseBody": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "87dy3t76dgt736"
+          },
+          "number": {
+            "type": "number",
+            "example": 203
+          },
+          "capacity": {
+            "type": "number",
+            "example": 60
+          },
+          "floor": {
+            "type": "number",
+            "example": 2
+          },
+          "resource": {
+            "type": "string",
+            "example": "projetor"
+          },
+          "building": {
+            "type": "string",
+            "example": "Types.ObjectId"
           }
         }
       }
