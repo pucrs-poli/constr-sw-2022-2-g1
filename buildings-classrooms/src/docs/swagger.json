@@ -49,9 +49,6 @@
           },
           "401": {
             "description": "Unauthorized (Not Logged In)."
-          },
-          "404": {
-            "description": "Building not found."
           }
         }
       },
@@ -59,7 +56,7 @@
         "tags": [
           "Buildings"
         ],
-        "description": "Endpoint to create a buildings.",
+        "description": "Endpoint to create a building.",
         "parameters": [
           {
             "name": "Authorization",
@@ -78,11 +75,14 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Ok.",
+          "201": {
+            "description": "Created.",
             "schema": {
               "$ref": "#/components/schemas/BuildingResponseBody"
             }
+          },
+          "400": {
+            "description": "Bad Request."
           },
           "500": {
             "description": "Internal Server Error."
@@ -121,6 +121,9 @@
               "$ref": "#/components/schemas/BuildingResponseBody"
             }
           },
+          "400": {
+            "description": "Bad Request."
+          },
           "401": {
             "description": "Unauthorized (Not Logged In)."
           },
@@ -145,7 +148,7 @@
           },
           {
             "name": "id",
-            "description": "An buildings ID.",
+            "description": "A building ID.",
             "in": "path",
             "schema": {
               "$ref": "#/components/schemas/MongoID"
@@ -160,8 +163,8 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "Ok. No Content.",
+          "200": {
+            "description": "Ok.",
             "schema": {
               "$ref": "#/components/schemas/BuildingResponseBody"
             }
@@ -173,7 +176,7 @@
             "description": "Unauthorized (Not Logged In)."
           },
           "404": {
-            "description": "Buildings not found."
+            "description": "Building not found."
           }
         }
       },
@@ -181,7 +184,7 @@
         "tags": [
           "Buildings"
         ],
-        "description": "Endpoint to update any attribute of an building.",
+        "description": "Endpoint to update any attribute of a building.",
         "parameters": [
           {
             "name": "Authorization",
@@ -193,7 +196,7 @@
           },
           {
             "name": "id",
-            "description": "An buildings ID.",
+            "description": "A building ID.",
             "in": "path",
             "schema": {
               "$ref": "#/components/schemas/MongoID"
@@ -207,15 +210,15 @@
               "properties": {
                 "attribute": {
                   "type": "?",
-                  "example": "attribute value"
+                  "example": "attribute-value"
                 }
               }
             }
           }
         ],
         "responses": {
-          "204": {
-            "description": "Ok. No Content.",
+          "200": {
+            "description": "Ok.",
             "schema": {
               "$ref": "#/components/schemas/BuildingResponseBody"
             }
@@ -227,7 +230,7 @@
             "description": "Unauthorized (Not Logged In)."
           },
           "404": {
-            "description": "Buildings not found."
+            "description": "Building not found."
           }
         }
       },
@@ -235,7 +238,7 @@
         "tags": [
           "Buildings"
         ],
-        "description": "Endpoint to delete an building.",
+        "description": "Endpoint to delete a building.",
         "parameters": [
           {
             "name": "Authorization",
@@ -247,7 +250,7 @@
           },
           {
             "name": "id",
-            "description": "An buildings ID.",
+            "description": "A building ID.",
             "in": "path",
             "schema": {
               "$ref": "#/components/schemas/MongoID"
@@ -255,8 +258,8 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "Ok. No Content.",
+          "200": {
+            "description": "Ok.",
             "schema": {
               "$ref": "#/components/schemas/BuildingResponseBody"
             }
@@ -268,7 +271,7 @@
             "description": "Unauthorized (Not Logged In)."
           },
           "404": {
-            "description": "Buildings not found."
+            "description": "Building not found."
           }
         }
       }
@@ -295,9 +298,6 @@
           },
           "401": {
             "description": "Unauthorized (Not Logged In)."
-          },
-          "404": {
-            "description": "Classroom not found."
           }
         }
       },
@@ -324,11 +324,14 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Ok.",
+          "201": {
+            "description": "Created.",
             "schema": {
               "$ref": "#/components/schemas/ClassroomResponseBody"
             }
+          },
+          "400": {
+            "description": "Bad Request."
           },
           "500": {
             "description": "Internal Server Error."
@@ -367,6 +370,9 @@
               "$ref": "#/components/schemas/ClassroomResponseBody"
             }
           },
+          "400": {
+            "description": "Bad Request."
+          },
           "401": {
             "description": "Unauthorized (Not Logged In)."
           },
@@ -379,7 +385,7 @@
         "tags": [
           "Classrooms"
         ],
-        "description": "Endpoint to update an classroom.",
+        "description": "Endpoint to update a classroom.",
         "parameters": [
           {
             "name": "Authorization",
@@ -391,7 +397,7 @@
           },
           {
             "name": "id",
-            "description": "An classroom ID.",
+            "description": "A classroom ID.",
             "in": "path",
             "schema": {
               "$ref": "#/components/schemas/MongoID"
@@ -406,8 +412,8 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "Ok. No Content.",
+          "200": {
+            "description": "Ok.",
             "schema": {
               "$ref": "#/components/schemas/ClassroomResponseBody"
             }
@@ -427,7 +433,7 @@
         "tags": [
           "Classrooms"
         ],
-        "description": "Endpoint to update any attribute of an classroom.",
+        "description": "Endpoint to update any attribute of a classroom.",
         "parameters": [
           {
             "name": "Authorization",
@@ -439,7 +445,7 @@
           },
           {
             "name": "id",
-            "description": "An classroom ID.",
+            "description": "A classroom ID.",
             "in": "path",
             "schema": {
               "$ref": "#/components/schemas/MongoID"
@@ -453,15 +459,15 @@
               "properties": {
                 "attribute": {
                   "type": "?",
-                  "example": "attribute value"
+                  "example": "attribute-value"
                 }
               }
             }
           }
         ],
         "responses": {
-          "204": {
-            "description": "Ok. No Content.",
+          "200": {
+            "description": "Ok.",
             "schema": {
               "$ref": "#/components/schemas/ClassroomResponseBody"
             }
@@ -481,7 +487,7 @@
         "tags": [
           "Classrooms"
         ],
-        "description": "Endpoint to delete an classroom.",
+        "description": "Endpoint to delete a classroom.",
         "parameters": [
           {
             "name": "Authorization",
@@ -493,7 +499,7 @@
           },
           {
             "name": "id",
-            "description": "An classroom ID.",
+            "description": "A classroom ID.",
             "in": "path",
             "schema": {
               "$ref": "#/components/schemas/MongoID"
@@ -501,8 +507,8 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "Ok. No Content.",
+          "200": {
+            "description": "Ok.",
             "schema": {
               "$ref": "#/components/schemas/ClassroomResponseBody"
             }
@@ -529,98 +535,6 @@
       "MongoID": {
         "type": "string",
         "example": "5e2052a21030440aa6239095613d5c73"
-      },
-      "User": {
-        "type": "object",
-        "properties": {
-          "sub": {
-            "type": "string",
-            "example": "36c924ba-7397-4253-a5b6-72a65bf707ae"
-          },
-          "preferred_username": {
-            "type": "string",
-            "example": "EduardoArruda700"
-          },
-          "given_name": {
-            "type": "string",
-            "example": "Eduardo"
-          },
-          "family_name": {
-            "type": "string",
-            "example": "Arruda"
-          },
-          "email": {
-            "type": "string",
-            "example": "arruda-professor@pucrs.br"
-          }
-        }
-      },
-      "LoginRequestBody": {
-        "type": "object",
-        "properties": {
-          "client_id": {
-            "type": "string",
-            "example": "grupo1"
-          },
-          "username": {
-            "type": "string",
-            "example": "admin"
-          },
-          "password": {
-            "type": "string",
-            "example": "12345"
-          },
-          "grant_type": {
-            "type": "string",
-            "example": "password"
-          }
-        }
-      },
-      "LoginResponseBody": {
-        "type": "object",
-        "properties": {
-          "token_type": {
-            "type": "string",
-            "example": "Bearer"
-          },
-          "access_token": {
-            "type": "string",
-            "example": "eyJhbGciOiJSUzI..."
-          },
-          "expires_in": {
-            "type": "number",
-            "example": 300
-          },
-          "refresh_token": {
-            "type": "string",
-            "example": "ey5TbGciOiJSUzK..."
-          },
-          "refresh_expires_in": {
-            "type": "number",
-            "example": 1800
-          }
-        }
-      },
-      "CreateUserRequestBody": {
-        "type": "object",
-        "properties": {
-          "firstName": {
-            "type": "string",
-            "example": "George"
-          },
-          "lastName": {
-            "type": "string",
-            "example": "Tyson"
-          },
-          "email": {
-            "type": "string",
-            "example": "george.tyson@gmail.com"
-          },
-          "username": {
-            "type": "string",
-            "example": "TysonGeorge125"
-          }
-        }
       },
       "BuildingRequestBody": {
         "type": "object",
@@ -747,7 +661,7 @@
           },
           "building": {
             "type": "string",
-            "example": "Types.ObjectId"
+            "example": "87dy3t76dgt736"
           }
         }
       },
